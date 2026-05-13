@@ -1000,21 +1000,20 @@
 
   async function cfFetch(url) {
     if (_cfCache[url]) return _cfCache[url];
-    const res = await fetch(url);
-    if (res.status === 429) {
-      // back off 2s and retry once
-      await new Promise(r => setTimeout(r, 2000));
-      const retry = await fetch(url);
-      if (!retry.ok) return null;
-      const data = await retry.json();
-      _cfCache[url] = data;
-      return data;
+    // retry up to 3 times with exponential backoff
+    for (let attempt = 0; attempt < 3; attempt++) {
+      if (attempt > 0) await new Promise(r => setTimeout(r, attempt * 3000));
+      try {
+        const res = await fetch(url);
+        if (res.status === 429) continue; // retry
+        if (!res.ok) return null;
+        const data = await res.json();
+        if (data.error) return null;
+        _cfCache[url] = data;
+        return data;
+      } catch (e) { continue; }
     }
-    if (!res.ok) return null;
-    const data = await res.json();
-    if (data.error) return null;
-    _cfCache[url] = data;
-    return data;
+    return null;
   }
 
   // ─── PASSWORD ───
@@ -1163,14 +1162,17 @@
     });
 
     try {
+      // GA4 calls in parallel (no rate limit issues)
       await Promise.all([
         loadB2CData(from, to, prev),
         loadB2BData(from, to, prev),
-        loadB2BHubSpotData(from, to, prev),
-        loadB2BProductsData(from, to),
         loadContactForms(from, to, prev),
         loadChannelGrouping(from, to)
       ]);
+      // Cloudflare Workers in sequence with small gap to avoid 429
+      await loadB2BHubSpotData(from, to, prev);
+      await new Promise(r => setTimeout(r, 500));
+      await loadB2BProductsData(from, to);
     } catch (e) {
       if (e.message.includes('401') || e.message.includes('invalid_grant')) {
         sessionStorage.clear();
