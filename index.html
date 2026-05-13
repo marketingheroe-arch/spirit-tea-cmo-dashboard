@@ -1075,7 +1075,7 @@
     });
 
     try {
-      const res = await fetch(`/.netlify/functions/hubspot-orders?from=${from}&to=${to}`);
+      const res = await fetch(`https://spirit-tea-hubspot-orders.marketing-heroe.workers.dev?from=${from}&to=${to}`);
       if (!res.ok) {
         const err = await res.json();
         throw new Error(err.error || 'Function error');
@@ -1108,7 +1108,7 @@
     ids.forEach(id => { const el = document.getElementById(id); if (el) el.innerHTML = loadingRow; });
 
     try {
-      const res = await fetch(`/.netlify/functions/hubspot-products?from=${from}&to=${to}`);
+      const res = await fetch(`https://spirit-tea-hubspot-products.marketing-heroe.workers.dev?from=${from}&to=${to}`);
       if (!res.ok) throw new Error('Products function error');
       const data = await res.json();
 
