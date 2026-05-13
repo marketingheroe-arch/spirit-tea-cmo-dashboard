@@ -452,6 +452,25 @@
     .tab-panel { display: none; }
     .tab-panel.active { display: block; }
 
+    /* ─── TOGGLE BUTTONS ─── */
+    .toggle-btn {
+      padding: 5px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 6px;
+      border: 1.5px solid var(--border);
+      background: var(--white);
+      color: var(--text-light);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .toggle-btn.active {
+      background: var(--green);
+      color: white;
+      border-color: var(--green);
+    }
+    .toggle-btn:hover:not(.active) { background: var(--gray-light); }
+
     /* ─── RESPONSIVE ─── */
     @media (max-width: 900px) {
       .kpi-grid-4, .kpi-grid-5, .kpi-grid-6 { grid-template-columns: repeat(2, 1fr); }
@@ -620,6 +639,35 @@
         </div>
       </div>
 
+      <!-- Contact Form KPI -->
+      <div class="block-label">Contact</div>
+      <div class="kpi-grid kpi-grid-4" style="margin-bottom:20px;">
+        <div class="kpi-card">
+          <div class="kpi-label">Contact Form Submissions</div>
+          <div class="kpi-value" id="ov-contact-forms">—</div>
+          <div id="ov-contact-forms-d"></div>
+          <div class="kpi-sub">/pages/contact-us · both sites</div>
+        </div>
+      </div>
+
+      <!-- Channel Grouping -->
+      <div class="block-label">Traffic by Channel</div>
+      <div class="table-card">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+          <div class="chart-title" style="margin-bottom:0;">Default Channel Grouping — B2C + B2B</div>
+          <div style="display:flex;gap:8px;">
+            <button class="toggle-btn active" id="ov-ch-btn-sessions" onclick="switchChannelView('ov','sessions')">Sessions</button>
+            <button class="toggle-btn" id="ov-ch-btn-purchases" onclick="switchChannelView('ov','purchases')">Purchases (B2C)</button>
+          </div>
+        </div>
+        <table>
+          <thead><tr><th>Channel</th><th id="ov-ch-col1">Sessions</th><th>Share</th></tr></thead>
+          <tbody id="ov-channel-table">
+            <tr><td colspan="3" style="text-align:center;color:var(--text-light);padding:24px;">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+
       <!-- Audience -->
       <div class="block-label">Audience — Top Cities</div>
       <div class="table-card">
@@ -747,6 +795,24 @@
             <canvas id="chart-b2c-products"></canvas>
           </div>
         </div>
+      </div>
+
+      <!-- Channel Grouping B2C -->
+      <div class="block-label">Traffic by Channel</div>
+      <div class="table-card">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+          <div class="chart-title" style="margin-bottom:0;">Default Channel Grouping</div>
+          <div style="display:flex;gap:8px;">
+            <button class="toggle-btn active" id="b2c-ch-btn-sessions" onclick="switchChannelView('b2c','sessions')">Sessions</button>
+            <button class="toggle-btn" id="b2c-ch-btn-purchases" onclick="switchChannelView('b2c','purchases')">Purchases</button>
+          </div>
+        </div>
+        <table>
+          <thead><tr><th>Channel</th><th id="b2c-ch-col1">Sessions</th><th>Share</th></tr></thead>
+          <tbody id="b2c-channel-table">
+            <tr><td colspan="3" style="text-align:center;color:var(--text-light);padding:24px;">Loading…</td></tr>
+          </tbody>
+        </table>
       </div>
 
       <!-- Audience -->
@@ -889,6 +955,18 @@
         </div>
       </div>
 
+      <!-- Channel Grouping B2B -->
+      <div class="block-label">Traffic by Channel</div>
+      <div class="table-card" style="margin-bottom:20px;">
+        <div class="chart-title">Default Channel Grouping — Sessions</div>
+        <table>
+          <thead><tr><th>Channel</th><th>Sessions</th><th>Share</th></tr></thead>
+          <tbody id="b2b-channel-table">
+            <tr><td colspan="3" style="text-align:center;color:var(--text-light);padding:24px;">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+
       <!-- Audience -->
       <div class="block-label">Audience</div>
       <div class="table-card">
@@ -918,6 +996,26 @@
 
   let accessToken = null;
   let charts = {};
+  const _cfCache = {}; // cache CF worker responses within session
+
+  async function cfFetch(url) {
+    if (_cfCache[url]) return _cfCache[url];
+    const res = await fetch(url);
+    if (res.status === 429) {
+      // back off 2s and retry once
+      await new Promise(r => setTimeout(r, 2000));
+      const retry = await fetch(url);
+      if (!retry.ok) return null;
+      const data = await retry.json();
+      _cfCache[url] = data;
+      return data;
+    }
+    if (!res.ok) return null;
+    const data = await res.json();
+    if (data.error) return null;
+    _cfCache[url] = data;
+    return data;
+  }
 
   // ─── PASSWORD ───
   function checkPassword() {
@@ -1069,7 +1167,9 @@
         loadB2CData(from, to, prev),
         loadB2BData(from, to, prev),
         loadB2BHubSpotData(from, to, prev),
-        loadB2BProductsData(from, to)
+        loadB2BProductsData(from, to),
+        loadContactForms(from, to, prev),
+        loadChannelGrouping(from, to)
       ]);
     } catch (e) {
       if (e.message.includes('401') || e.message.includes('invalid_grant')) {
@@ -1371,29 +1471,29 @@
     const ids = ['b2b-hs-revenue', 'b2b-hs-orders', 'b2b-hs-aov', 'ov-b2b-revenue'];
     ids.forEach(id => { const el = document.getElementById(id); if (el) el.textContent = '…'; });
 
-    try {
-      const [curr, prevData] = await Promise.all([
-        fetch(`${CF_ORDERS}?from=${from}&to=${to}`).then(r => r.json()),
-        fetch(`${CF_ORDERS}?from=${prev.from}&to=${prev.to}`).then(r => r.json())
-      ]);
-
-      set('b2b-hs-revenue', '$' + fmt(Math.round(curr.revenue)));
-      delta(curr.revenue, prevData.revenue, 'b2b-hs-revenue-d');
-      set('b2b-hs-orders', fmt(curr.orders));
-      delta(curr.orders, prevData.orders, 'b2b-hs-orders-d');
-      set('b2b-hs-aov', '$' + fmt(Math.round(curr.aov)));
-      delta(curr.aov, prevData.aov, 'b2b-hs-aov-d');
-      set('ov-b2b-revenue', '$' + fmt(Math.round(curr.revenue)));
-      delta(curr.revenue, prevData.revenue, 'ov-b2b-revenue-d');
-
-      sessionStorage.setItem('b2b_revenue', Math.round(curr.revenue));
-      sessionStorage.setItem('p_b2b_revenue', Math.round(prevData.revenue));
-      updateOverviewTotalRevenue();
-
-    } catch (err) {
-      console.error('HubSpot orders error:', err);
+    const curr = await cfFetch(`${CF_ORDERS}?from=${from}&to=${to}`);
+    if (!curr) {
       ids.forEach(id => { const el = document.getElementById(id); if (el) el.textContent = 'N/A'; });
+      return;
     }
+
+    const prevData = await cfFetch(`${CF_ORDERS}?from=${prev.from}&to=${prev.to}`);
+    const pRev = prevData?.revenue || 0;
+    const pOrders = prevData?.orders || 0;
+    const pAov = prevData?.aov || 0;
+
+    set('b2b-hs-revenue', '$' + fmt(Math.round(curr.revenue || 0)));
+    if (pRev) delta(curr.revenue, pRev, 'b2b-hs-revenue-d');
+    set('b2b-hs-orders', fmt(curr.orders || 0));
+    if (pOrders) delta(curr.orders, pOrders, 'b2b-hs-orders-d');
+    set('b2b-hs-aov', '$' + fmt(Math.round(curr.aov || 0)));
+    if (pAov) delta(curr.aov, pAov, 'b2b-hs-aov-d');
+    set('ov-b2b-revenue', '$' + fmt(Math.round(curr.revenue || 0)));
+    if (pRev) delta(curr.revenue, pRev, 'ov-b2b-revenue-d');
+
+    sessionStorage.setItem('b2b_revenue', Math.round(curr.revenue || 0));
+    sessionStorage.setItem('p_b2b_revenue', Math.round(pRev));
+    updateOverviewTotalRevenue();
   }
 
   // ─── HUBSPOT PRODUCTS ───
@@ -1404,9 +1504,8 @@
     });
 
     try {
-      const res = await fetch(`${CF_PRODUCTS}?from=${from}&to=${to}`);
-      if (!res.ok) throw new Error('Products worker error');
-      const data = await res.json();
+      const data = await cfFetch(`${CF_PRODUCTS}?from=${from}&to=${to}`);
+      if (!data) throw new Error('Products worker error');
 
       set('b2b-hs-unique-products', fmt(data.uniqueProducts));
 
@@ -1483,13 +1582,16 @@
   }
 
   function updateOverviewTotalRevenue() {
-    const b2cR = parseInt(sessionStorage.getItem('b2c_revenue') || 0);
-    const b2bR = parseInt(sessionStorage.getItem('b2b_revenue') || 0);
-    const pb2cR = parseInt(sessionStorage.getItem('p_b2c_revenue') || 0);
-    const pb2bR = parseInt(sessionStorage.getItem('p_b2b_revenue') || 0);
-    if (b2cR || b2bR) {
-      set('ov-total-revenue', '$' + fmt(b2cR + b2bR));
-      delta(b2cR + b2bR, pb2cR + pb2bR, 'ov-total-revenue-d');
+    const b2cR = parseInt(sessionStorage.getItem('b2c_revenue') || '0');
+    const b2bR = parseInt(sessionStorage.getItem('b2b_revenue') || '0');
+    const pb2cR = parseInt(sessionStorage.getItem('p_b2c_revenue') || '0');
+    const pb2bR = parseInt(sessionStorage.getItem('p_b2b_revenue') || '0');
+    // Only show total once we have B2C data (B2B may be 0 legitimately)
+    if (sessionStorage.getItem('b2c_revenue') !== null) {
+      const total = (isNaN(b2cR) ? 0 : b2cR) + (isNaN(b2bR) ? 0 : b2bR);
+      const pTotal = (isNaN(pb2cR) ? 0 : pb2cR) + (isNaN(pb2bR) ? 0 : pb2bR);
+      set('ov-total-revenue', '$' + fmt(total));
+      if (pTotal > 0) delta(total, pTotal, 'ov-total-revenue-d');
     }
   }
 
@@ -1640,6 +1742,141 @@
         }
       }
     });
+  }
+
+  // ─── CHANNEL GROUPING DATA STORE ───
+  // Stored after GA4 fetch: { sessions: [{channel, value}], purchases: [{channel, value}] }
+  const channelData = { b2c: { sessions: [], purchases: [] }, b2b: { sessions: [] }, ov: { sessions: [], purchases: [] } };
+
+  function renderChannelTable(tbodyId, colHeaderId, rows, metric) {
+    const tbody = document.getElementById(tbodyId);
+    if (!tbody) return;
+    if (colHeaderId) {
+      const col = document.getElementById(colHeaderId);
+      if (col) col.textContent = metric === 'purchases' ? 'Purchases' : 'Sessions';
+    }
+    if (!rows || rows.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;color:var(--text-light);padding:16px;">No data</td></tr>';
+      return;
+    }
+    const total = rows.reduce((s, r) => s + r.value, 0);
+    const sorted = [...rows].sort((a, b) => b.value - a.value);
+    tbody.innerHTML = sorted.map(r => {
+      const pct = total > 0 ? ((r.value / total) * 100).toFixed(1) : '0';
+      const barW = total > 0 ? Math.round((r.value / total) * 100) : 0;
+      return `<tr>
+        <td style="font-weight:500;">${r.channel}</td>
+        <td style="font-weight:700;">${fmt(r.value)}</td>
+        <td style="min-width:140px;">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div style="flex:1;height:6px;background:var(--gray-light);border-radius:3px;overflow:hidden;">
+              <div style="width:${barW}%;height:100%;background:var(--green);border-radius:3px;"></div>
+            </div>
+            <span style="font-size:11px;color:var(--text-light);width:36px;text-align:right;">${pct}%</span>
+          </div>
+        </td>
+      </tr>`;
+    }).join('');
+  }
+
+  function switchChannelView(tab, metric) {
+    const data = channelData[tab][metric] || [];
+    const colId = `${tab}-ch-col1`;
+    renderChannelTable(`${tab}-channel-table`, colId, data, metric);
+    // toggle buttons
+    ['sessions', 'purchases'].forEach(m => {
+      const btn = document.getElementById(`${tab}-ch-btn-${m}`);
+      if (btn) btn.classList.toggle('active', m === metric);
+    });
+  }
+
+  // ─── CONTACT FORMS ───
+  async function loadContactForms(from, to, prev) {
+    // form_submit on /pages/contact-us exists in B2B property (both sites share same form)
+    try {
+      const [curr, prevData] = await Promise.all([
+        ga4Query(B2B_PROPERTY, {
+          dateRanges: [{ startDate: from, endDate: to }],
+          dimensions: [{ name: 'pagePath' }],
+          metrics: [{ name: 'eventCount' }],
+          dimensionFilter: {
+            andGroup: { expressions: [
+              { filter: { fieldName: 'eventName', stringFilter: { matchType: 'EXACT', value: 'form_submit' } } },
+              { filter: { fieldName: 'pagePath', stringFilter: { matchType: 'EXACT', value: '/pages/contact-us' } } }
+            ]}
+          }
+        }),
+        ga4Query(B2B_PROPERTY, {
+          dateRanges: [{ startDate: prev.from, endDate: prev.to }],
+          dimensions: [{ name: 'pagePath' }],
+          metrics: [{ name: 'eventCount' }],
+          dimensionFilter: {
+            andGroup: { expressions: [
+              { filter: { fieldName: 'eventName', stringFilter: { matchType: 'EXACT', value: 'form_submit' } } },
+              { filter: { fieldName: 'pagePath', stringFilter: { matchType: 'EXACT', value: '/pages/contact-us' } } }
+            ]}
+          }
+        })
+      ]);
+      const count = parseInt(curr.rows?.[0]?.metricValues?.[0]?.value || '0');
+      const pCount = parseInt(prevData.rows?.[0]?.metricValues?.[0]?.value || '0');
+      set('ov-contact-forms', fmt(count));
+      delta(count, pCount, 'ov-contact-forms-d');
+    } catch (e) {
+      console.error('Contact forms error:', e);
+      set('ov-contact-forms', 'N/A');
+    }
+  }
+
+  // ─── CHANNEL GROUPING FETCH ───
+  async function loadChannelGrouping(from, to) {
+    try {
+      const [b2cSessions, b2cPurchases, b2bSessions] = await Promise.all([
+        ga4Query(B2C_PROPERTY, {
+          dateRanges: [{ startDate: from, endDate: to }],
+          dimensions: [{ name: 'sessionDefaultChannelGrouping' }],
+          metrics: [{ name: 'sessions' }],
+          orderBys: [{ metric: { metricName: 'sessions' }, desc: true }]
+        }),
+        ga4Query(B2C_PROPERTY, {
+          dateRanges: [{ startDate: from, endDate: to }],
+          dimensions: [{ name: 'sessionDefaultChannelGrouping' }],
+          metrics: [{ name: 'ecommercePurchases' }],
+          orderBys: [{ metric: { metricName: 'ecommercePurchases' }, desc: true }]
+        }),
+        ga4Query(B2B_PROPERTY, {
+          dateRanges: [{ startDate: from, endDate: to }],
+          dimensions: [{ name: 'sessionDefaultChannelGrouping' }],
+          metrics: [{ name: 'sessions' }],
+          orderBys: [{ metric: { metricName: 'sessions' }, desc: true }]
+        })
+      ]);
+
+      const toArr = (rows, metricIdx) => (rows || []).map(r => ({
+        channel: getDim(r, 0) || '(Other)',
+        value: parseInt(getVal(r, metricIdx))
+      })).filter(r => r.value > 0);
+
+      channelData.b2c.sessions = toArr(b2cSessions.rows, 0);
+      channelData.b2c.purchases = toArr(b2cPurchases.rows, 0);
+      channelData.b2b.sessions = toArr(b2bSessions.rows, 0);
+
+      // Overview = merge B2C + B2B sessions by channel
+      const ovMap = {};
+      [...channelData.b2c.sessions, ...channelData.b2b.sessions].forEach(r => {
+        ovMap[r.channel] = (ovMap[r.channel] || 0) + r.value;
+      });
+      channelData.ov.sessions = Object.entries(ovMap).map(([channel, value]) => ({ channel, value }));
+      channelData.ov.purchases = channelData.b2c.purchases; // only B2C has purchases
+
+      // Render all tables (default view = sessions)
+      renderChannelTable('b2c-channel-table', 'b2c-ch-col1', channelData.b2c.sessions, 'sessions');
+      renderChannelTable('b2b-channel-table', null, channelData.b2b.sessions, 'sessions');
+      renderChannelTable('ov-channel-table', 'ov-ch-col1', channelData.ov.sessions, 'sessions');
+
+    } catch (e) {
+      console.error('Channel grouping error:', e);
+    }
   }
 
   // ─── TABS ───
