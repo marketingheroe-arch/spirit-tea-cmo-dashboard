@@ -18,8 +18,10 @@
       --text: #111827;
       --text-light: #6b7280;
       --red: #dc2626;
+      --red-pale: #fee2e2;
       --amber: #d97706;
       --blue: #1d4ed8;
+      --purple: #7c3aed;
       --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
       --shadow-md: 0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.05);
     }
@@ -84,9 +86,7 @@
       transition: border-color 0.2s;
     }
 
-    .login-card input[type="password"]:focus {
-      border-color: var(--green-light);
-    }
+    .login-card input[type="password"]:focus { border-color: var(--green-light); }
 
     .btn-primary {
       width: 100%;
@@ -111,14 +111,6 @@
     }
 
     /* ─── OAUTH SCREEN ─── */
-    #oauth-screen {
-      display: none;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      background: var(--cream);
-    }
-
     .oauth-card {
       background: var(--white);
       border-radius: 16px;
@@ -128,11 +120,7 @@
       text-align: center;
     }
 
-    .oauth-card h2 {
-      font-size: 20px;
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
+    .oauth-card h2 { font-size: 20px; font-weight: 700; margin-bottom: 10px; }
 
     .oauth-card p {
       color: var(--text-light);
@@ -176,11 +164,7 @@
       z-index: 100;
     }
 
-    .header-left {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
+    .header-left { display: flex; align-items: center; gap: 16px; }
 
     .header-brand {
       font-size: 13px;
@@ -197,11 +181,7 @@
       padding-left: 16px;
     }
 
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
+    .header-right { display: flex; align-items: center; gap: 16px; }
 
     .date-range {
       display: flex;
@@ -254,7 +234,6 @@
       border-bottom: 1px solid var(--border);
       padding: 0 32px;
       display: flex;
-      gap: 0;
     }
 
     .tab {
@@ -288,60 +267,83 @@
       margin-top: -10px;
     }
 
+    .block-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-light);
+      margin-bottom: 12px;
+      margin-top: 28px;
+    }
+
     /* ─── KPI CARDS ─── */
     .kpi-grid {
       display: grid;
       gap: 16px;
-      margin-bottom: 28px;
+      margin-bottom: 20px;
     }
 
     .kpi-grid-4 { grid-template-columns: repeat(4, 1fr); }
     .kpi-grid-3 { grid-template-columns: repeat(3, 1fr); }
     .kpi-grid-5 { grid-template-columns: repeat(5, 1fr); }
+    .kpi-grid-6 { grid-template-columns: repeat(6, 1fr); }
 
     .kpi-card {
       background: var(--white);
       border-radius: 12px;
-      padding: 20px 22px;
+      padding: 18px 20px;
       box-shadow: var(--shadow);
       border: 1px solid var(--border);
     }
 
     .kpi-label {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.08em;
       color: var(--text-light);
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .kpi-value {
-      font-size: 28px;
+      font-size: 26px;
       font-weight: 700;
       color: var(--text);
       line-height: 1;
       margin-bottom: 4px;
     }
 
-    .kpi-sub {
-      font-size: 12px;
-      color: var(--text-light);
+    .kpi-sub { font-size: 11px; color: var(--text-light); }
+
+    .kpi-delta {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-top: 4px;
     }
+
+    .kpi-delta.up { background: var(--green-pale); color: var(--green); }
+    .kpi-delta.down { background: var(--red-pale); color: var(--red); }
+    .kpi-delta.neutral { background: var(--gray-light); color: var(--gray); }
 
     .kpi-card.green { border-left: 3px solid var(--green); }
     .kpi-card.blue { border-left: 3px solid var(--blue); }
     .kpi-card.amber { border-left: 3px solid var(--amber); }
+    .kpi-card.purple { border-left: 3px solid var(--purple); }
 
     /* ─── CHARTS ─── */
     .chart-grid {
       display: grid;
       gap: 20px;
-      margin-bottom: 28px;
+      margin-bottom: 20px;
     }
 
     .chart-grid-2 { grid-template-columns: 1fr 1fr; }
     .chart-grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+    .chart-grid-32 { grid-template-columns: 2fr 1fr; }
 
     .chart-card {
       background: var(--white);
@@ -359,6 +361,8 @@
     }
 
     .chart-wrapper { position: relative; height: 220px; }
+    .chart-wrapper.sm { height: 180px; }
+    .chart-wrapper.lg { height: 280px; }
 
     /* ─── TABLE ─── */
     .table-card {
@@ -367,14 +371,10 @@
       padding: 22px 24px;
       box-shadow: var(--shadow);
       border: 1px solid var(--border);
-      margin-bottom: 28px;
+      margin-bottom: 20px;
     }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 13px;
-    }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
 
     thead th {
       text-align: left;
@@ -388,7 +388,7 @@
     }
 
     tbody td {
-      padding: 11px 12px;
+      padding: 10px 12px;
       border-bottom: 1px solid var(--gray-light);
       color: var(--text);
     }
@@ -408,58 +408,6 @@
     .badge-blue { background: #dbeafe; color: var(--blue); }
     .badge-amber { background: #fef3c7; color: var(--amber); }
 
-    /* ─── FUNNEL ─── */
-    .funnel-container {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .funnel-step {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .funnel-label {
-      font-size: 12px;
-      color: var(--text-light);
-      width: 110px;
-      text-align: right;
-      flex-shrink: 0;
-    }
-
-    .funnel-bar-wrap {
-      flex: 1;
-      background: var(--gray-light);
-      border-radius: 4px;
-      height: 32px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .funnel-bar {
-      height: 100%;
-      background: var(--green);
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-      padding-left: 10px;
-      color: white;
-      font-size: 12px;
-      font-weight: 600;
-      transition: width 0.6s ease;
-    }
-
-    .funnel-count {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--text);
-      width: 50px;
-      text-align: right;
-      flex-shrink: 0;
-    }
-
     /* ─── DIVIDER ─── */
     .divider {
       display: flex;
@@ -468,11 +416,7 @@
       margin: 28px 0 20px;
     }
 
-    .divider-line {
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
+    .divider-line { flex: 1; height: 1px; background: var(--border); }
 
     .divider-text {
       font-size: 11px;
@@ -510,10 +454,8 @@
 
     /* ─── RESPONSIVE ─── */
     @media (max-width: 900px) {
-      .kpi-grid-4 { grid-template-columns: repeat(2, 1fr); }
-      .kpi-grid-5 { grid-template-columns: repeat(2, 1fr); }
-      .chart-grid-2 { grid-template-columns: 1fr; }
-      .chart-grid-3 { grid-template-columns: 1fr; }
+      .kpi-grid-4, .kpi-grid-5, .kpi-grid-6 { grid-template-columns: repeat(2, 1fr); }
+      .chart-grid-2, .chart-grid-3, .chart-grid-32 { grid-template-columns: 1fr; }
       .content { padding: 16px; }
       header { padding: 0 16px; }
       .tabs { padding: 0 16px; }
@@ -571,226 +513,228 @@
     <div class="tab" onclick="switchTab('b2b', this)">🤝 B2B — Wholesale</div>
   </div>
 
-  <!-- OVERVIEW TAB -->
   <div class="content">
+
+    <!-- ═══════════════ OVERVIEW TAB ═══════════════ -->
     <div id="tab-overview" class="tab-panel active">
       <div class="section-title">Overall Performance</div>
       <div class="section-subtitle" id="overview-date-label">Loading...</div>
 
-      <div class="kpi-grid kpi-grid-4">
+      <!-- Traffic & Engagement -->
+      <div class="block-label">Traffic &amp; Engagement — Combined B2C + B2B</div>
+      <div class="kpi-grid kpi-grid-5">
         <div class="kpi-card green">
           <div class="kpi-label">Total Sessions</div>
           <div class="kpi-value" id="ov-sessions">—</div>
-          <div class="kpi-sub">B2C + B2B combined</div>
+          <div id="ov-sessions-d"></div>
+          <div class="kpi-sub">B2C + B2B</div>
+        </div>
+        <div class="kpi-card green">
+          <div class="kpi-label">Total Users</div>
+          <div class="kpi-value" id="ov-total-users">—</div>
+          <div id="ov-total-users-d"></div>
         </div>
         <div class="kpi-card green">
           <div class="kpi-label">New Users</div>
           <div class="kpi-value" id="ov-new-users">—</div>
-          <div class="kpi-sub">First time visitors</div>
+          <div id="ov-new-users-d"></div>
         </div>
         <div class="kpi-card blue">
-          <div class="kpi-label">Revenue (B2C)</div>
-          <div class="kpi-value" id="ov-revenue">—</div>
-          <div class="kpi-sub">Retail purchases</div>
+          <div class="kpi-label">Engagement Rate</div>
+          <div class="kpi-value" id="ov-eng-rate">—</div>
+          <div id="ov-eng-rate-d"></div>
+          <div class="kpi-sub">B2C avg</div>
         </div>
-        <div class="kpi-card amber">
-          <div class="kpi-label">Leads (B2B)</div>
-          <div class="kpi-value" id="ov-leads">—</div>
-          <div class="kpi-sub">Wholesale enquiries</div>
+        <div class="kpi-card blue">
+          <div class="kpi-label">Avg Session Duration</div>
+          <div class="kpi-value" id="ov-session-dur">—</div>
+          <div id="ov-session-dur-d"></div>
+          <div class="kpi-sub">B2C avg</div>
         </div>
       </div>
 
-      <div class="chart-grid chart-grid-2">
+      <div class="chart-grid chart-grid-32" style="margin-bottom:20px;">
         <div class="chart-card">
-          <div class="chart-title">Sessions by Channel</div>
-          <div class="chart-wrapper">
-            <canvas id="chart-sessions-split"></canvas>
-          </div>
-        </div>
-        <div class="chart-card">
-          <div class="chart-title">Daily Sessions Trend</div>
+          <div class="chart-title">Daily Sessions Trend — B2C + B2B</div>
           <div class="chart-wrapper">
             <canvas id="chart-daily-trend"></canvas>
           </div>
         </div>
-      </div>
-
-      <div class="chart-grid chart-grid-2" style="margin-bottom:28px;">
         <div class="chart-card">
-          <div class="chart-title">B2C Purchase Funnel</div>
-          <div class="funnel-container" id="ov-b2c-funnel" style="padding:16px 0;"></div>
-        </div>
-        <div class="chart-card">
-          <div class="chart-title">B2B Lead Funnel</div>
-          <div class="funnel-container" id="ov-b2b-funnel" style="padding:16px 0;"></div>
+          <div class="chart-title">Device Breakdown — B2C</div>
+          <div class="chart-wrapper">
+            <canvas id="chart-ov-devices"></canvas>
+          </div>
         </div>
       </div>
 
-      <div class="divider">
-        <div class="divider-line"></div>
-        <div class="divider-text">B2C Snapshot</div>
-        <div class="divider-line"></div>
-      </div>
-
+      <!-- Commerce -->
+      <div class="block-label">Commerce — Revenue</div>
       <div class="kpi-grid kpi-grid-4">
-        <div class="kpi-card">
-          <div class="kpi-label">Purchases</div>
-          <div class="kpi-value" id="ov-purchases">—</div>
-          <div class="kpi-sub">Completed orders</div>
+        <div class="kpi-card green">
+          <div class="kpi-label">Total Revenue</div>
+          <div class="kpi-value" id="ov-total-revenue">—</div>
+          <div id="ov-total-revenue-d"></div>
+          <div class="kpi-sub">B2C + B2B combined</div>
         </div>
-        <div class="kpi-card">
-          <div class="kpi-label">Conversion Rate</div>
-          <div class="kpi-value" id="ov-cr">—</div>
-          <div class="kpi-sub">Sessions → Purchase</div>
+        <div class="kpi-card blue">
+          <div class="kpi-label">B2C Revenue (GA4)</div>
+          <div class="kpi-value" id="ov-revenue">—</div>
+          <div id="ov-revenue-d"></div>
+          <div class="kpi-sub">Retail purchases</div>
         </div>
-        <div class="kpi-card">
-          <div class="kpi-label">Avg Order Value</div>
-          <div class="kpi-value" id="ov-aov">—</div>
-          <div class="kpi-sub">Revenue / Purchases</div>
-        </div>
-        <div class="kpi-card">
-          <div class="kpi-label">Cart Abandonment</div>
-          <div class="kpi-value" id="ov-cart-abandon">—</div>
-          <div class="kpi-sub">Added to cart, didn't buy</div>
-        </div>
-      </div>
-
-      <div class="divider">
-        <div class="divider-line"></div>
-        <div class="divider-text">B2B Snapshot</div>
-        <div class="divider-line"></div>
-      </div>
-
-      <div class="kpi-grid kpi-grid-4">
-        <div class="kpi-card blue" style="border-left:3px solid #1d4ed8;">
+        <div class="kpi-card blue">
           <div class="kpi-label">B2B Revenue (HubSpot)</div>
           <div class="kpi-value" id="ov-b2b-revenue">—</div>
+          <div id="ov-b2b-revenue-d"></div>
           <div class="kpi-sub">Wholesale orders</div>
         </div>
-        <div class="kpi-card">
-          <div class="kpi-label">B2B Sessions</div>
-          <div class="kpi-value" id="ov-b2b-sessions">—</div>
-          <div class="kpi-sub">Wholesale site visits</div>
-        </div>
-        <div class="kpi-card">
-          <div class="kpi-label">Leads Generated</div>
-          <div class="kpi-value" id="ov-b2b-leads">—</div>
-          <div class="kpi-sub">Enquiries captured</div>
-        </div>
-        <div class="kpi-card">
-          <div class="kpi-label">Lead Rate</div>
-          <div class="kpi-value" id="ov-b2b-lead-rate">—</div>
-          <div class="kpi-sub">Sessions → Lead</div>
+        <div class="kpi-card amber">
+          <div class="kpi-label">B2C Conv. Rate</div>
+          <div class="kpi-value" id="ov-cr">—</div>
+          <div id="ov-cr-d"></div>
+          <div class="kpi-sub">Sessions → Purchase</div>
         </div>
       </div>
 
-      <div class="chart-grid chart-grid-2" style="margin-top:24px;">
+      <!-- Top Products -->
+      <div class="block-label">Top Products</div>
+      <div class="chart-grid chart-grid-2" style="margin-bottom:20px;">
         <div class="table-card" style="margin-bottom:0;">
-          <div class="chart-title">Top B2B Products by Revenue (HubSpot)</div>
+          <div class="chart-title">Top B2C Products (GA4)</div>
           <table>
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Product</th>
-                <th>Units</th>
-                <th>Revenue</th>
-              </tr>
-            </thead>
-            <tbody id="ov-b2b-products-table">
-              <tr><td colspan="4" style="text-align:center;color:var(--text-light);padding:24px;">Loading…</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="table-card" style="margin-bottom:0;">
-          <div class="chart-title">Top B2C Products by Revenue (GA4)</div>
-          <table>
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Product</th>
-                <th>Units</th>
-                <th>Revenue</th>
-              </tr>
-            </thead>
+            <thead><tr><th>#</th><th>Product</th><th>Units</th><th>Revenue</th></tr></thead>
             <tbody id="ov-b2c-products-table">
               <tr><td colspan="4" style="text-align:center;color:var(--text-light);padding:24px;">Loading…</td></tr>
             </tbody>
           </table>
         </div>
+        <div class="table-card" style="margin-bottom:0;">
+          <div class="chart-title">Top B2B Products (HubSpot)</div>
+          <table>
+            <thead><tr><th>#</th><th>Product</th><th>Units</th><th>Revenue</th></tr></thead>
+            <tbody id="ov-b2b-products-table">
+              <tr><td colspan="4" style="text-align:center;color:var(--text-light);padding:24px;">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Audience -->
+      <div class="block-label">Audience — Top Cities</div>
+      <div class="table-card">
+        <div class="chart-title">Top Cities by Sessions — B2C</div>
+        <table>
+          <thead><tr><th>#</th><th>City</th><th>Sessions</th><th>New Users</th></tr></thead>
+          <tbody id="ov-cities-table">
+            <tr><td colspan="4" style="text-align:center;color:var(--text-light);padding:24px;">Loading…</td></tr>
+          </tbody>
+        </table>
       </div>
     </div>
 
-    <!-- B2C TAB -->
+    <!-- ═══════════════ B2C TAB ═══════════════ -->
     <div id="tab-b2c" class="tab-panel">
       <div class="section-title">B2C — Retail Performance (spirittea.co)</div>
       <div class="section-subtitle" id="b2c-date-label">Loading...</div>
 
+      <!-- Traffic & Engagement -->
+      <div class="block-label">Traffic &amp; Engagement</div>
       <div class="kpi-grid kpi-grid-5">
         <div class="kpi-card green">
           <div class="kpi-label">Sessions</div>
           <div class="kpi-value" id="b2c-sessions">—</div>
+          <div id="b2c-sessions-d"></div>
+        </div>
+        <div class="kpi-card green">
+          <div class="kpi-label">Total Users</div>
+          <div class="kpi-value" id="b2c-total-users">—</div>
+          <div id="b2c-total-users-d"></div>
         </div>
         <div class="kpi-card green">
           <div class="kpi-label">New Users</div>
           <div class="kpi-value" id="b2c-new-users">—</div>
+          <div id="b2c-new-users-d"></div>
         </div>
         <div class="kpi-card blue">
-          <div class="kpi-label">Revenue</div>
-          <div class="kpi-value" id="b2c-revenue">—</div>
+          <div class="kpi-label">Engagement Rate</div>
+          <div class="kpi-value" id="b2c-eng-rate">—</div>
+          <div id="b2c-eng-rate-d"></div>
         </div>
         <div class="kpi-card blue">
-          <div class="kpi-label">Purchases</div>
-          <div class="kpi-value" id="b2c-purchases">—</div>
-        </div>
-        <div class="kpi-card amber">
-          <div class="kpi-label">Avg Order Value</div>
-          <div class="kpi-value" id="b2c-aov">—</div>
+          <div class="kpi-label">Avg Session Duration</div>
+          <div class="kpi-value" id="b2c-session-dur">—</div>
+          <div id="b2c-session-dur-d"></div>
         </div>
       </div>
 
-      <div class="kpi-grid kpi-grid-3" style="margin-bottom:28px;">
-        <div class="kpi-card">
-          <div class="kpi-label">Conversion Rate</div>
-          <div class="kpi-value" id="b2c-cr">—</div>
-          <div class="kpi-sub">Sessions → Purchase</div>
-        </div>
-        <div class="kpi-card">
-          <div class="kpi-label">Add to Cart</div>
-          <div class="kpi-value" id="b2c-atc">—</div>
-          <div class="kpi-sub">Product intent</div>
-        </div>
-        <div class="kpi-card">
-          <div class="kpi-label">Cart Abandonment</div>
-          <div class="kpi-value" id="b2c-cart-abandon">—</div>
-          <div class="kpi-sub">ATC but no purchase</div>
-        </div>
-      </div>
-
-      <div class="chart-grid chart-grid-2">
+      <div class="chart-grid chart-grid-32" style="margin-bottom:20px;">
         <div class="chart-card">
-          <div class="chart-title">Purchase Funnel</div>
-          <div class="funnel-container" id="b2c-funnel" style="padding: 16px 0;"></div>
-        </div>
-        <div class="chart-card">
-          <div class="chart-title">Revenue by Category</div>
+          <div class="chart-title">Daily Sessions</div>
           <div class="chart-wrapper">
-            <canvas id="chart-b2c-category"></canvas>
+            <canvas id="chart-b2c-daily"></canvas>
+          </div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">Device Breakdown</div>
+          <div class="chart-wrapper">
+            <canvas id="chart-b2c-devices"></canvas>
           </div>
         </div>
       </div>
 
-      <div class="chart-grid chart-grid-2" style="margin-bottom:28px;">
+      <!-- Commerce -->
+      <div class="block-label">Commerce</div>
+      <div class="kpi-grid kpi-grid-4">
+        <div class="kpi-card green">
+          <div class="kpi-label">Revenue</div>
+          <div class="kpi-value" id="b2c-revenue">—</div>
+          <div id="b2c-revenue-d"></div>
+        </div>
+        <div class="kpi-card blue">
+          <div class="kpi-label">Purchases</div>
+          <div class="kpi-value" id="b2c-purchases">—</div>
+          <div id="b2c-purchases-d"></div>
+        </div>
+        <div class="kpi-card blue">
+          <div class="kpi-label">Avg Order Value</div>
+          <div class="kpi-value" id="b2c-aov">—</div>
+          <div id="b2c-aov-d"></div>
+        </div>
+        <div class="kpi-card amber">
+          <div class="kpi-label">Conversion Rate</div>
+          <div class="kpi-value" id="b2c-cr">—</div>
+          <div id="b2c-cr-d"></div>
+          <div class="kpi-sub">Sessions → Purchase</div>
+        </div>
+      </div>
+      <div class="kpi-grid kpi-grid-3" style="margin-bottom:20px;">
+        <div class="kpi-card">
+          <div class="kpi-label">Add to Cart</div>
+          <div class="kpi-value" id="b2c-atc">—</div>
+          <div id="b2c-atc-d"></div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Checkouts</div>
+          <div class="kpi-value" id="b2c-checkouts">—</div>
+          <div id="b2c-checkouts-d"></div>
+        </div>
+        <div class="kpi-card amber">
+          <div class="kpi-label">Cart Abandonment</div>
+          <div class="kpi-value" id="b2c-cart-abandon">—</div>
+          <div id="b2c-cart-abandon-d"></div>
+          <div class="kpi-sub">ATC but no purchase</div>
+        </div>
+      </div>
+
+      <!-- Top Products -->
+      <div class="block-label">Top Products</div>
+      <div class="chart-grid chart-grid-2" style="margin-bottom:20px;">
         <div class="table-card" style="margin-bottom:0;">
           <div class="chart-title">Top Products by Revenue</div>
           <table>
             <thead>
-              <tr>
-                <th>#</th>
-                <th>Product</th>
-                <th>Category</th>
-                <th>Units</th>
-                <th>Revenue</th>
-              </tr>
+              <tr><th>#</th><th>Product</th><th>Category</th><th>Units</th><th>Revenue</th></tr>
             </thead>
             <tbody id="b2c-products-table">
               <tr><td colspan="5" style="text-align:center;color:var(--text-light);padding:24px;">Loading...</td></tr>
@@ -799,108 +743,139 @@
         </div>
         <div class="chart-card">
           <div class="chart-title">Revenue per Product</div>
-          <div class="chart-wrapper" style="height:280px;">
+          <div class="chart-wrapper lg">
             <canvas id="chart-b2c-products"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Audience -->
+      <div class="block-label">Audience</div>
+      <div class="chart-grid chart-grid-2">
+        <div class="table-card" style="margin-bottom:0;">
+          <div class="chart-title">Top Cities by Sessions</div>
+          <table>
+            <thead><tr><th>#</th><th>City</th><th>Sessions</th><th>New Users</th></tr></thead>
+            <tbody id="b2c-cities-table">
+              <tr><td colspan="4" style="text-align:center;color:var(--text-light);padding:24px;">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">Revenue by Category</div>
+          <div class="chart-wrapper">
+            <canvas id="chart-b2c-category"></canvas>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- B2B TAB -->
+    <!-- ═══════════════ B2B TAB ═══════════════ -->
     <div id="tab-b2b" class="tab-panel">
       <div class="section-title">B2B — Wholesale Performance</div>
       <div class="section-subtitle" id="b2b-date-label">Loading...</div>
 
-      <!-- HubSpot Revenue row -->
-      <div class="kpi-grid kpi-grid-3" style="margin-bottom:16px;">
-        <div class="kpi-card blue" style="border-left:3px solid #1d4ed8;">
-          <div class="kpi-label">Order Revenue (HubSpot)</div>
-          <div class="kpi-value" id="b2b-hs-revenue">—</div>
-          <div class="kpi-sub">Wholesale orders · period</div>
-        </div>
-        <div class="kpi-card blue">
-          <div class="kpi-label">Orders (HubSpot)</div>
-          <div class="kpi-value" id="b2b-hs-orders">—</div>
-          <div class="kpi-sub">Completed orders · period</div>
-        </div>
-        <div class="kpi-card amber">
-          <div class="kpi-label">Avg Order Value</div>
-          <div class="kpi-value" id="b2b-hs-aov">—</div>
-          <div class="kpi-sub">Revenue / Orders</div>
-        </div>
-        <div class="kpi-card" style="border-left:3px solid #7c3aed;">
-          <div class="kpi-label">Unique Products Sold</div>
-          <div class="kpi-value" id="b2b-hs-unique-products">—</div>
-          <div class="kpi-sub">SKUs in period</div>
-        </div>
-      </div>
-
-      <div class="kpi-grid kpi-grid-4">
+      <!-- Traffic & Engagement -->
+      <div class="block-label">Traffic &amp; Engagement</div>
+      <div class="kpi-grid kpi-grid-5">
         <div class="kpi-card green">
           <div class="kpi-label">Sessions</div>
           <div class="kpi-value" id="b2b-sessions">—</div>
-          <div class="kpi-sub">Wholesale site visits</div>
+          <div id="b2b-sessions-d"></div>
+        </div>
+        <div class="kpi-card green">
+          <div class="kpi-label">Total Users</div>
+          <div class="kpi-value" id="b2b-total-users">—</div>
+          <div id="b2b-total-users-d"></div>
         </div>
         <div class="kpi-card green">
           <div class="kpi-label">New Users</div>
           <div class="kpi-value" id="b2b-new-users">—</div>
-          <div class="kpi-sub">First time visitors</div>
+          <div id="b2b-new-users-d"></div>
         </div>
         <div class="kpi-card blue">
-          <div class="kpi-label">Leads Generated</div>
-          <div class="kpi-value" id="b2b-leads">—</div>
-          <div class="kpi-sub">Enquiries captured</div>
+          <div class="kpi-label">Engagement Rate</div>
+          <div class="kpi-value" id="b2b-eng-rate">—</div>
+          <div id="b2b-eng-rate-d"></div>
         </div>
-        <div class="kpi-card amber">
-          <div class="kpi-label">Lead Rate</div>
-          <div class="kpi-value" id="b2b-lead-rate">—</div>
-          <div class="kpi-sub">Sessions → Lead</div>
+        <div class="kpi-card blue">
+          <div class="kpi-label">Avg Session Duration</div>
+          <div class="kpi-value" id="b2b-session-dur">—</div>
+          <div id="b2b-session-dur-d"></div>
         </div>
       </div>
 
-      <div class="chart-grid chart-grid-2">
-        <div class="chart-card">
-          <div class="chart-title">Lead Generation Funnel</div>
-          <div class="funnel-container" id="b2b-funnel" style="padding: 16px 0;"></div>
-        </div>
+      <div class="chart-grid chart-grid-32" style="margin-bottom:20px;">
         <div class="chart-card">
           <div class="chart-title">Daily Sessions — Wholesale</div>
           <div class="chart-wrapper">
             <canvas id="chart-b2b-daily"></canvas>
           </div>
         </div>
+        <div class="chart-card">
+          <div class="chart-title">Device Breakdown</div>
+          <div class="chart-wrapper">
+            <canvas id="chart-b2b-devices"></canvas>
+          </div>
+        </div>
       </div>
 
-      <div class="kpi-grid kpi-grid-3">
+      <!-- Commerce (HubSpot) -->
+      <div class="block-label">Commerce (HubSpot Orders)</div>
+      <div class="kpi-grid kpi-grid-4">
+        <div class="kpi-card green">
+          <div class="kpi-label">Revenue</div>
+          <div class="kpi-value" id="b2b-hs-revenue">—</div>
+          <div id="b2b-hs-revenue-d"></div>
+          <div class="kpi-sub">Wholesale orders · period</div>
+        </div>
+        <div class="kpi-card blue">
+          <div class="kpi-label">Orders</div>
+          <div class="kpi-value" id="b2b-hs-orders">—</div>
+          <div id="b2b-hs-orders-d"></div>
+        </div>
+        <div class="kpi-card amber">
+          <div class="kpi-label">Avg Order Value</div>
+          <div class="kpi-value" id="b2b-hs-aov">—</div>
+          <div id="b2b-hs-aov-d"></div>
+        </div>
+        <div class="kpi-card purple">
+          <div class="kpi-label">Unique Products Sold</div>
+          <div class="kpi-value" id="b2b-hs-unique-products">—</div>
+          <div class="kpi-sub">SKUs in period</div>
+        </div>
+      </div>
+
+      <!-- Form / Leads -->
+      <div class="block-label">Lead Generation (Forms)</div>
+      <div class="kpi-grid kpi-grid-3" style="margin-bottom:20px;">
         <div class="kpi-card">
           <div class="kpi-label">Form Starts</div>
           <div class="kpi-value" id="b2b-form-starts">—</div>
+          <div id="b2b-form-starts-d"></div>
           <div class="kpi-sub">Enquiry form opened</div>
         </div>
-        <div class="kpi-card">
+        <div class="kpi-card green">
           <div class="kpi-label">Form Submissions</div>
           <div class="kpi-value" id="b2b-form-submits">—</div>
+          <div id="b2b-form-submits-d"></div>
           <div class="kpi-sub">Enquiry form sent</div>
         </div>
-        <div class="kpi-card">
+        <div class="kpi-card blue">
           <div class="kpi-label">Form Completion Rate</div>
           <div class="kpi-value" id="b2b-form-rate">—</div>
+          <div id="b2b-form-rate-d"></div>
           <div class="kpi-sub">Started → Submitted</div>
         </div>
       </div>
 
-      <div class="chart-grid chart-grid-2" style="margin-top:24px;">
+      <!-- Top Products -->
+      <div class="block-label">Top Products (HubSpot)</div>
+      <div class="chart-grid chart-grid-2" style="margin-bottom:20px;">
         <div class="table-card" style="margin-bottom:0;">
-          <div class="chart-title">Top Products by Revenue (HubSpot)</div>
+          <div class="chart-title">Top Products by Revenue</div>
           <table>
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Product</th>
-                <th>Units</th>
-                <th>Revenue</th>
-              </tr>
-            </thead>
+            <thead><tr><th>#</th><th>Product</th><th>Units</th><th>Revenue</th></tr></thead>
             <tbody id="b2b-products-table">
               <tr><td colspan="4" style="text-align:center;color:var(--text-light);padding:24px;">Loading…</td></tr>
             </tbody>
@@ -908,14 +883,27 @@
         </div>
         <div class="chart-card">
           <div class="chart-title">Revenue per Product</div>
-          <div class="chart-wrapper" style="height:280px;">
+          <div class="chart-wrapper lg">
             <canvas id="chart-b2b-products"></canvas>
           </div>
         </div>
       </div>
+
+      <!-- Audience -->
+      <div class="block-label">Audience</div>
+      <div class="table-card">
+        <div class="chart-title">Top Cities by Sessions</div>
+        <table>
+          <thead><tr><th>#</th><th>City</th><th>Sessions</th><th>New Users</th></tr></thead>
+          <tbody id="b2b-cities-table">
+            <tr><td colspan="4" style="text-align:center;color:var(--text-light);padding:24px;">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-  </div>
-</div>
+
+  </div><!-- .content -->
+</div><!-- #app -->
 
 <script>
   // ─── CONFIG ───
@@ -925,6 +913,8 @@
   const B2B_PROPERTY = '348652126';
   const PASSWORD = 'spiritmkt2253';
   const SCOPES = 'https://www.googleapis.com/auth/analytics.readonly';
+  const CF_ORDERS = 'https://spirit-tea-hubspot-orders.marketing-heroe.workers.dev';
+  const CF_PRODUCTS = 'https://spirit-tea-hubspot-products.marketing-heroe.workers.dev';
 
   let accessToken = null;
   let charts = {};
@@ -983,7 +973,7 @@
     window.location.reload();
   }
 
-  // ─── DATE RANGE ───
+  // ─── DATE UTILS ───
   function initDates() {
     const to = new Date();
     const from = new Date();
@@ -999,21 +989,52 @@
     };
   }
 
+  function getPrevDateRange(from, to) {
+    const f = new Date(from + 'T00:00:00');
+    const t = new Date(to + 'T00:00:00');
+    const days = Math.round((t - f) / 86400000) + 1;
+    const pf = new Date(f); pf.setDate(pf.getDate() - days);
+    const pt = new Date(f); pt.setDate(pt.getDate() - 1);
+    return {
+      from: pf.toISOString().split('T')[0],
+      to: pt.toISOString().split('T')[0]
+    };
+  }
+
   function formatDateLabel() {
     const { from, to } = getDateRange();
-    const f = new Date(from).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-    const t = new Date(to).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    const f = new Date(from + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    const t = new Date(to + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
     return `${f} – ${t}`;
+  }
+
+  // ─── DELTA BADGE ───
+  function delta(curr, prev, elId, lowerIsBetter = false) {
+    const el = document.getElementById(elId);
+    if (!el || !prev || prev === 0) return;
+    const pct = ((curr - prev) / Math.abs(prev) * 100).toFixed(1);
+    const p = parseFloat(pct);
+    const isPositive = lowerIsBetter ? p < 0 : p > 0;
+    const cls = p === 0 ? 'neutral' : (isPositive ? 'up' : 'down');
+    const arrow = p > 0 ? '↑' : (p < 0 ? '↓' : '→');
+    el.innerHTML = `<span class="kpi-delta ${cls}">${arrow} ${Math.abs(pct)}% vs prev period</span>`;
+  }
+
+  // ─── FORMAT HELPERS ───
+  function fmt(n) { return n != null ? Number(n).toLocaleString('en-US') : '—'; }
+
+  function fmtDuration(seconds) {
+    const s = Math.round(parseFloat(seconds) || 0);
+    const m = Math.floor(s / 60);
+    const sec = s % 60;
+    return `${m}:${sec.toString().padStart(2, '0')}`;
   }
 
   // ─── GA4 API ───
   async function ga4Query(propertyId, requestBody) {
     const res = await fetch(`https://analyticsdata.googleapis.com/v1beta/properties/${propertyId}:runReport`, {
       method: 'POST',
-      headers: {
-        'Authorization': 'Bearer ' + accessToken,
-        'Content-Type': 'application/json'
-      },
+      headers: { 'Authorization': 'Bearer ' + accessToken, 'Content-Type': 'application/json' },
       body: JSON.stringify(requestBody)
     });
     if (!res.ok) {
@@ -1023,13 +1044,8 @@
     return res.json();
   }
 
-  function getVal(row, idx) {
-    return row?.metricValues?.[idx]?.value || '0';
-  }
-
-  function getDim(row, idx) {
-    return row?.dimensionValues?.[idx]?.value || '';
-  }
+  function getVal(row, idx) { return row?.metricValues?.[idx]?.value || '0'; }
+  function getDim(row, idx) { return row?.dimensionValues?.[idx]?.value || ''; }
 
   // ─── SHOW APP ───
   function showApp() {
@@ -1041,6 +1057,7 @@
   // ─── LOAD DATA ───
   async function loadData() {
     const { from, to } = getDateRange();
+    const prev = getPrevDateRange(from, to);
     const label = formatDateLabel();
 
     ['overview-date-label', 'b2c-date-label', 'b2b-date-label'].forEach(id => {
@@ -1049,10 +1066,9 @@
 
     try {
       await Promise.all([
-        loadB2CData(from, to),
-        loadB2BData(from, to),
-        loadDailyTrend(from, to),
-        loadB2BHubSpotData(from, to),
+        loadB2CData(from, to, prev),
+        loadB2BData(from, to, prev),
+        loadB2BHubSpotData(from, to, prev),
         loadB2BProductsData(from, to)
       ]);
     } catch (e) {
@@ -1062,317 +1078,221 @@
         window.location.reload();
       } else {
         console.error(e);
-        alert('Error loading data: ' + e.message);
       }
-    }
-  }
-
-  // ─── HUBSPOT B2B ORDERS (via Netlify Function — no CORS) ───
-  async function loadB2BHubSpotData(from, to) {
-    ['b2b-hs-revenue', 'b2b-hs-orders', 'b2b-hs-aov', 'ov-b2b-revenue'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.textContent = '…';
-    });
-
-    try {
-      const res = await fetch(`https://spirit-tea-hubspot-orders.marketing-heroe.workers.dev?from=${from}&to=${to}`);
-      if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.error || 'Function error');
-      }
-      const data = await res.json();
-
-      const elRev = document.getElementById('b2b-hs-revenue');
-      const elOrders = document.getElementById('b2b-hs-orders');
-      const elAov = document.getElementById('b2b-hs-aov');
-      const elOvRev = document.getElementById('ov-b2b-revenue');
-
-      if (elRev) elRev.textContent = '$' + fmt(Math.round(data.revenue));
-      if (elOrders) elOrders.textContent = fmt(data.orders);
-      if (elAov) elAov.textContent = '$' + fmt(Math.round(data.aov));
-      if (elOvRev) elOvRev.textContent = '$' + fmt(Math.round(data.revenue));
-
-    } catch (err) {
-      console.error('HubSpot load error:', err);
-      ['b2b-hs-revenue', 'b2b-hs-orders', 'b2b-hs-aov', 'ov-b2b-revenue'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.textContent = 'N/A';
-      });
-    }
-  }
-
-  // ─── HUBSPOT B2B PRODUCTS (via Netlify Function) ───
-  async function loadB2BProductsData(from, to) {
-    const loadingRow = '<tr><td colspan="4" style="text-align:center;color:var(--text-light);padding:24px;">Loading products…</td></tr>';
-    const ids = ['b2b-products-table', 'ov-b2b-products-table'];
-    ids.forEach(id => { const el = document.getElementById(id); if (el) el.innerHTML = loadingRow; });
-
-    try {
-      const res = await fetch(`https://spirit-tea-hubspot-products.marketing-heroe.workers.dev?from=${from}&to=${to}`);
-      if (!res.ok) throw new Error('Products function error');
-      const data = await res.json();
-
-      // Update unique products count
-      const elUniq = document.getElementById('b2b-hs-unique-products');
-      if (elUniq) elUniq.textContent = fmt(data.uniqueProducts);
-
-      const products = data.products || [];
-      if (products.length === 0) {
-        const emptyRow = '<tr><td colspan="4" style="text-align:center;color:var(--text-light);padding:24px;">No product data in this period</td></tr>';
-        ids.forEach(id => { const el = document.getElementById(id); if (el) el.innerHTML = emptyRow; });
-        return;
-      }
-
-      const tableHtml = products.map((p, i) => {
-        const shortName = p.name.length > 35 ? p.name.slice(0, 33) + '…' : p.name;
-        return `<tr>
-          <td style="color:var(--text-light);font-weight:600;">${i + 1}</td>
-          <td style="font-weight:500;" title="${p.name}">${shortName}</td>
-          <td>${fmt(p.units)}</td>
-          <td style="font-weight:700;">$${fmt(Math.round(p.revenue))}</td>
-        </tr>`;
-      }).join('');
-
-      ids.forEach(id => { const el = document.getElementById(id); if (el) el.innerHTML = tableHtml; });
-
-      // Render B2B product bar chart
-      const labels = products.map(p => p.name.length > 18 ? p.name.slice(0, 16) + '…' : p.name);
-      const revs = products.map(p => p.revenue.toFixed(0));
-      if (document.getElementById('chart-b2b-products')) {
-        renderBarChart('chart-b2b-products', labels, revs, '#1d4ed8');
-      }
-
-    } catch (err) {
-      console.error('Products load error:', err);
-      const errRow = '<tr><td colspan="4" style="text-align:center;color:var(--red);padding:24px;">Could not load product data</td></tr>';
-      ids.forEach(id => { const el = document.getElementById(id); if (el) el.innerHTML = errRow; });
     }
   }
 
   // ─── B2C DATA ───
-  async function loadB2CData(from, to) {
-    const [overviewData, productData] = await Promise.all([
-      ga4Query(B2C_PROPERTY, {
-        dateRanges: [{ startDate: from, endDate: to }],
-        metrics: [
-          { name: 'sessions' },
-          { name: 'newUsers' },
-          { name: 'purchaseRevenue' },
-          { name: 'ecommercePurchases' },
-          { name: 'addToCarts' },
-          { name: 'checkouts' },
-          { name: 'itemsViewed' }
-        ]
-      }),
+  async function loadB2CData(from, to, prev) {
+    const metricsReq = [
+      { name: 'sessions' },
+      { name: 'totalUsers' },
+      { name: 'newUsers' },
+      { name: 'engagementRate' },
+      { name: 'averageSessionDuration' },
+      { name: 'purchaseRevenue' },
+      { name: 'ecommercePurchases' },
+      { name: 'addToCarts' },
+      { name: 'checkouts' },
+      { name: 'itemsViewed' }
+    ];
+
+    const [curr, prevData, productData, cityData, deviceData, dailyData] = await Promise.all([
+      ga4Query(B2C_PROPERTY, { dateRanges: [{ startDate: from, endDate: to }], metrics: metricsReq }),
+      ga4Query(B2C_PROPERTY, { dateRanges: [{ startDate: prev.from, endDate: prev.to }], metrics: metricsReq }),
       ga4Query(B2C_PROPERTY, {
         dateRanges: [{ startDate: from, endDate: to }],
         dimensions: [{ name: 'itemName' }, { name: 'itemCategory' }],
-        metrics: [
-          { name: 'itemRevenue' },
-          { name: 'itemsPurchased' }
-        ],
+        metrics: [{ name: 'itemRevenue' }, { name: 'itemsPurchased' }],
         orderBys: [{ metric: { metricName: 'itemRevenue' }, desc: true }],
         limit: 10
-      })
-    ]);
-
-    const row = overviewData.rows?.[0];
-    const sessions = parseInt(getVal(row, 0));
-    const newUsers = parseInt(getVal(row, 1));
-    const revenue = parseFloat(getVal(row, 2));
-    const purchases = parseInt(getVal(row, 3) || '0');
-    const atc = parseInt(getVal(row, 4));
-    const checkouts = parseInt(getVal(row, 5));
-    const itemsViewed = parseInt(getVal(row, 6));
-    const cr = sessions > 0 ? ((purchases / sessions) * 100).toFixed(1) : '0';
-    const aov = purchases > 0 ? (revenue / purchases).toFixed(0) : '0';
-    const cartAbandon = atc > 0 ? (((atc - purchases) / atc) * 100).toFixed(0) : '0';
-
-    // Overview KPIs
-    document.getElementById('ov-sessions').textContent = fmt(sessions + parseInt(sessionStorage.getItem('b2b_sessions') || 0));
-    document.getElementById('ov-new-users').textContent = fmt(newUsers + parseInt(sessionStorage.getItem('b2b_new_users') || 0));
-    document.getElementById('ov-revenue').textContent = '$' + fmt(Math.round(revenue));
-    document.getElementById('ov-purchases').textContent = fmt(purchases);
-    document.getElementById('ov-cr').textContent = cr + '%';
-    document.getElementById('ov-aov').textContent = '$' + aov;
-    document.getElementById('ov-cart-abandon').textContent = cartAbandon + '%';
-
-    sessionStorage.setItem('b2c_sessions', sessions);
-    sessionStorage.setItem('b2c_new_users', newUsers);
-
-    // B2C KPIs
-    document.getElementById('b2c-sessions').textContent = fmt(sessions);
-    document.getElementById('b2c-new-users').textContent = fmt(newUsers);
-    document.getElementById('b2c-revenue').textContent = '$' + fmt(Math.round(revenue));
-    document.getElementById('b2c-purchases').textContent = fmt(purchases);
-    document.getElementById('b2c-aov').textContent = '$' + aov;
-    document.getElementById('b2c-cr').textContent = cr + '%';
-    document.getElementById('b2c-atc').textContent = fmt(atc);
-    document.getElementById('b2c-cart-abandon').textContent = cartAbandon + '%';
-
-    // Funnel B2C
-    renderFunnel('b2c-funnel', [
-      { label: 'Sessions', value: sessions },
-      { label: 'View Item', value: itemsViewed },
-      { label: 'Add to Cart', value: atc },
-      { label: 'Checkout', value: checkouts },
-      { label: 'Purchase', value: purchases }
-    ]);
-
-    renderFunnel('ov-b2c-funnel', [
-      { label: 'Sessions', value: sessions },
-      { label: 'View Item', value: itemsViewed },
-      { label: 'Add to Cart', value: atc },
-      { label: 'Checkout', value: checkouts },
-      { label: 'Purchase', value: purchases }
-    ]);
-
-    // Products table (B2C tab)
-    const tbody = document.getElementById('b2c-products-table');
-    const rows = productData.rows || [];
-    if (rows.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--text-light);padding:24px;">No purchase data in this period</td></tr>';
-    } else {
-      tbody.innerHTML = rows.map((r, i) => {
-        const name = getDim(r, 0);
-        const cat = getDim(r, 1);
-        const rev = parseFloat(getVal(r, 0)).toFixed(0);
-        const units = getVal(r, 1);
-        const badgeClass = cat === 'Matcha' ? 'badge-green' : cat === 'Green' ? 'badge-blue' : 'badge-amber';
-        return `<tr>
-          <td style="color:var(--text-light);font-weight:600;">${i + 1}</td>
-          <td style="font-weight:500;">${name}</td>
-          <td><span class="badge ${badgeClass}">${cat || '—'}</span></td>
-          <td>${units}</td>
-          <td style="font-weight:700;">$${fmt(parseInt(rev))}</td>
-        </tr>`;
-      }).join('');
-    }
-
-    // Overview B2C products table (simplified, no category column)
-    const ovB2cTbody = document.getElementById('ov-b2c-products-table');
-    if (ovB2cTbody) {
-      if (rows.length === 0) {
-        ovB2cTbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--text-light);padding:24px;">No purchase data in this period</td></tr>';
-      } else {
-        ovB2cTbody.innerHTML = rows.map((r, i) => {
-          const name = getDim(r, 0);
-          const rev = parseFloat(getVal(r, 0)).toFixed(0);
-          const units = getVal(r, 1);
-          const shortName = name.length > 35 ? name.slice(0, 33) + '…' : name;
-          return `<tr>
-            <td style="color:var(--text-light);font-weight:600;">${i + 1}</td>
-            <td style="font-weight:500;" title="${name}">${shortName}</td>
-            <td>${units}</td>
-            <td style="font-weight:700;">$${fmt(parseInt(rev))}</td>
-          </tr>`;
-        }).join('');
-      }
-    }
-
-    // Category chart
-    const catMap = {};
-    rows.forEach(r => {
-      const cat = getDim(r, 1);
-      const rev = parseFloat(getVal(r, 0));
-      catMap[cat] = (catMap[cat] || 0) + rev;
-    });
-    const catLabels = Object.keys(catMap);
-    const catVals = catLabels.map(k => catMap[k].toFixed(0));
-    renderDoughnut('chart-b2c-category', catLabels, catVals);
-
-    // Sessions split (overview chart)
-    const b2bSessions = parseInt(sessionStorage.getItem('b2b_sessions') || 0);
-    renderDoughnut('chart-sessions-split',
-      ['B2C Retail', 'B2B Wholesale'],
-      [sessions, b2bSessions],
-      ['#2d6a4f', '#1d4ed8']
-    );
-
-    // Product bar chart
-    const prodLabels = rows.map(r => {
-      const name = getDim(r, 0);
-      return name.length > 18 ? name.slice(0, 16) + '…' : name;
-    });
-    const prodRevs = rows.map(r => parseFloat(getVal(r, 0)).toFixed(0));
-    renderBarChart('chart-b2c-products', prodLabels, prodRevs);
-  }
-
-  // ─── B2B DATA ───
-  async function loadB2BData(from, to) {
-    const data = await ga4Query(B2B_PROPERTY, {
-      dateRanges: [{ startDate: from, endDate: to }],
-      metrics: [
-        { name: 'sessions' },
-        { name: 'newUsers' },
-        { name: 'keyEvents' }
-      ]
-    });
-
-    const formData = await ga4Query(B2B_PROPERTY, {
-      dateRanges: [{ startDate: from, endDate: to }],
-      dimensions: [{ name: 'eventName' }],
-      metrics: [{ name: 'eventCount' }]
-    });
-
-    const row = data.rows?.[0];
-    const sessions = parseInt(getVal(row, 0));
-    const newUsers = parseInt(getVal(row, 1));
-
-    let formStarts = 0, formSubmits = 0, leads = 0;
-    (formData.rows || []).forEach(r => {
-      const ev = getDim(r, 0);
-      const cnt = parseInt(getVal(r, 0));
-      if (ev === 'form_start') formStarts = cnt;
-      if (ev === 'form_submit') formSubmits = cnt;
-      if (ev === 'generate_lead') leads = cnt;
-    });
-
-    const leadRate = sessions > 0 ? ((leads / sessions) * 100).toFixed(1) : '0';
-    const formRate = formStarts > 0 ? ((formSubmits / formStarts) * 100).toFixed(0) : '0';
-
-    sessionStorage.setItem('b2b_sessions', sessions);
-    sessionStorage.setItem('b2b_new_users', newUsers);
-
-    // Overview
-    document.getElementById('ov-leads').textContent = fmt(leads);
-    document.getElementById('ov-b2b-sessions').textContent = fmt(sessions);
-    document.getElementById('ov-b2b-leads').textContent = fmt(leads);
-    document.getElementById('ov-b2b-lead-rate').textContent = leadRate + '%';
-
-    // B2B KPIs
-    document.getElementById('b2b-sessions').textContent = fmt(sessions);
-    document.getElementById('b2b-new-users').textContent = fmt(newUsers);
-    document.getElementById('b2b-leads').textContent = fmt(leads);
-    document.getElementById('b2b-lead-rate').textContent = leadRate + '%';
-    document.getElementById('b2b-form-starts').textContent = fmt(formStarts);
-    document.getElementById('b2b-form-submits').textContent = fmt(formSubmits);
-    document.getElementById('b2b-form-rate').textContent = formRate + '%';
-
-    // B2B Funnel
-    renderFunnel('b2b-funnel', [
-      { label: 'Sessions', value: sessions },
-      { label: 'Form Starts', value: formStarts },
-      { label: 'Leads', value: leads },
-      { label: 'Form Submit', value: formSubmits }
-    ]);
-
-    renderFunnel('ov-b2b-funnel', [
-      { label: 'Sessions', value: sessions },
-      { label: 'Form Starts', value: formStarts },
-      { label: 'Leads', value: leads },
-      { label: 'Form Submit', value: formSubmits }
-    ]);
-  }
-
-  // ─── DAILY TREND ───
-  async function loadDailyTrend(from, to) {
-    const [b2cDaily, b2bDaily] = await Promise.all([
+      }),
+      ga4Query(B2C_PROPERTY, {
+        dateRanges: [{ startDate: from, endDate: to }],
+        dimensions: [{ name: 'city' }],
+        metrics: [{ name: 'sessions' }, { name: 'newUsers' }],
+        orderBys: [{ metric: { metricName: 'sessions' }, desc: true }],
+        limit: 10
+      }),
+      ga4Query(B2C_PROPERTY, {
+        dateRanges: [{ startDate: from, endDate: to }],
+        dimensions: [{ name: 'deviceCategory' }],
+        metrics: [{ name: 'sessions' }]
+      }),
       ga4Query(B2C_PROPERTY, {
         dateRanges: [{ startDate: from, endDate: to }],
         dimensions: [{ name: 'date' }],
         metrics: [{ name: 'sessions' }],
         orderBys: [{ dimension: { dimensionName: 'date' } }]
+      })
+    ]);
+
+    const row = curr.rows?.[0];
+    const prow = prevData.rows?.[0];
+
+    const sessions = parseInt(getVal(row, 0));
+    const totalUsers = parseInt(getVal(row, 1));
+    const newUsers = parseInt(getVal(row, 2));
+    const engRate = parseFloat(getVal(row, 3)) * 100;
+    const sessionDur = parseFloat(getVal(row, 4));
+    const revenue = parseFloat(getVal(row, 5));
+    const purchases = parseInt(getVal(row, 6));
+    const atc = parseInt(getVal(row, 7));
+    const checkouts = parseInt(getVal(row, 8));
+
+    const pSessions = parseInt(getVal(prow, 0));
+    const pTotalUsers = parseInt(getVal(prow, 1));
+    const pNewUsers = parseInt(getVal(prow, 2));
+    const pEngRate = parseFloat(getVal(prow, 3)) * 100;
+    const pSessionDur = parseFloat(getVal(prow, 4));
+    const pRevenue = parseFloat(getVal(prow, 5));
+    const pPurchases = parseInt(getVal(prow, 6));
+    const pAtc = parseInt(getVal(prow, 7));
+    const pCheckouts = parseInt(getVal(prow, 8));
+
+    const cr = sessions > 0 ? ((purchases / sessions) * 100).toFixed(1) : '0';
+    const pCr = pSessions > 0 ? ((pPurchases / pSessions) * 100) : 0;
+    const aov = purchases > 0 ? Math.round(revenue / purchases) : 0;
+    const pAov = pPurchases > 0 ? Math.round(pRevenue / pPurchases) : 0;
+    const cartAbandon = atc > 0 ? (((atc - purchases) / atc) * 100).toFixed(0) : '0';
+    const pCartAbandon = pAtc > 0 ? ((pAtc - pPurchases) / pAtc * 100) : 0;
+
+    // Store for overview combined calc
+    sessionStorage.setItem('b2c_sessions', sessions);
+    sessionStorage.setItem('b2c_total_users', totalUsers);
+    sessionStorage.setItem('b2c_new_users', newUsers);
+    sessionStorage.setItem('b2c_revenue', Math.round(revenue));
+    sessionStorage.setItem('b2c_eng_rate', engRate.toFixed(1));
+    sessionStorage.setItem('b2c_session_dur', sessionDur.toFixed(0));
+    sessionStorage.setItem('p_b2c_sessions', pSessions);
+    sessionStorage.setItem('p_b2c_total_users', pTotalUsers);
+    sessionStorage.setItem('p_b2c_new_users', pNewUsers);
+    sessionStorage.setItem('p_b2c_revenue', Math.round(pRevenue));
+    sessionStorage.setItem('p_b2c_eng_rate', pEngRate.toFixed(1));
+    sessionStorage.setItem('p_b2c_session_dur', pSessionDur.toFixed(0));
+    sessionStorage.setItem('p_b2c_cr', pCr.toFixed(1));
+    sessionStorage.setItem('b2c_cr', cr);
+
+    // B2C KPIs
+    set('b2c-sessions', fmt(sessions)); delta(sessions, pSessions, 'b2c-sessions-d');
+    set('b2c-total-users', fmt(totalUsers)); delta(totalUsers, pTotalUsers, 'b2c-total-users-d');
+    set('b2c-new-users', fmt(newUsers)); delta(newUsers, pNewUsers, 'b2c-new-users-d');
+    set('b2c-eng-rate', engRate.toFixed(1) + '%'); delta(engRate, pEngRate, 'b2c-eng-rate-d');
+    set('b2c-session-dur', fmtDuration(sessionDur)); delta(sessionDur, pSessionDur, 'b2c-session-dur-d');
+    set('b2c-revenue', '$' + fmt(Math.round(revenue))); delta(revenue, pRevenue, 'b2c-revenue-d');
+    set('b2c-purchases', fmt(purchases)); delta(purchases, pPurchases, 'b2c-purchases-d');
+    set('b2c-aov', '$' + aov); delta(aov, pAov, 'b2c-aov-d');
+    set('b2c-cr', cr + '%'); delta(parseFloat(cr), pCr, 'b2c-cr-d');
+    set('b2c-atc', fmt(atc)); delta(atc, pAtc, 'b2c-atc-d');
+    set('b2c-checkouts', fmt(checkouts)); delta(checkouts, pCheckouts, 'b2c-checkouts-d');
+    set('b2c-cart-abandon', cartAbandon + '%'); delta(parseFloat(cartAbandon), pCartAbandon, 'b2c-cart-abandon-d', true);
+
+    // Overview traffic KPIs (combined with B2B after both load)
+    updateOverviewTraffic();
+
+    // Overview revenue KPIs
+    set('ov-revenue', '$' + fmt(Math.round(revenue)));
+    delta(revenue, pRevenue, 'ov-revenue-d');
+    updateOverviewTotalRevenue();
+
+    // Overview conversion
+    set('ov-cr', cr + '%');
+    delta(parseFloat(cr), pCr, 'ov-cr-d');
+
+    // Products table B2C
+    const prodRows = productData.rows || [];
+    renderProductsTableB2C('b2c-products-table', prodRows);
+
+    // Overview B2C products (no category col)
+    const ovB2cTbody = document.getElementById('ov-b2c-products-table');
+    if (ovB2cTbody) {
+      if (prodRows.length === 0) {
+        ovB2cTbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--text-light);padding:24px;">No data</td></tr>';
+      } else {
+        ovB2cTbody.innerHTML = prodRows.map((r, i) => {
+          const name = getDim(r, 0);
+          const short = name.length > 35 ? name.slice(0, 33) + '…' : name;
+          const rev = parseFloat(getVal(r, 0));
+          const units = getVal(r, 1);
+          return `<tr>
+            <td style="color:var(--text-light);font-weight:600;">${i+1}</td>
+            <td style="font-weight:500;" title="${name}">${short}</td>
+            <td>${units}</td>
+            <td style="font-weight:700;">$${fmt(Math.round(rev))}</td>
+          </tr>`;
+        }).join('');
+      }
+    }
+
+    // Category doughnut (B2C tab)
+    const catMap = {};
+    prodRows.forEach(r => {
+      const cat = getDim(r, 1) || 'Other';
+      catMap[cat] = (catMap[cat] || 0) + parseFloat(getVal(r, 0));
+    });
+    const catLabels = Object.keys(catMap);
+    const catVals = catLabels.map(k => catMap[k].toFixed(0));
+    renderDoughnut('chart-b2c-category', catLabels, catVals);
+
+    // Product bar chart B2C
+    const pLabels = prodRows.map(r => { const n = getDim(r, 0); return n.length > 18 ? n.slice(0,16)+'…' : n; });
+    const pRevs = prodRows.map(r => parseFloat(getVal(r, 0)).toFixed(0));
+    renderBarChart('chart-b2c-products', pLabels, pRevs, '#2d6a4f');
+
+    // Cities table B2C
+    renderCitiesTable('b2c-cities-table', cityData.rows || []);
+    renderCitiesTable('ov-cities-table', (cityData.rows || []).slice(0, 5));
+
+    // Device doughnut B2C
+    renderDeviceDoughnut('chart-b2c-devices', deviceData.rows || []);
+    renderDeviceDoughnut('chart-ov-devices', deviceData.rows || []);
+
+    // Daily sessions B2C
+    const dailyRows = dailyData.rows || [];
+    const dailyLabels = dailyRows.map(r => { const d = getDim(r, 0); return d.slice(4,6)+'/'+d.slice(6,8); });
+    const dailyVals = dailyRows.map(r => parseInt(getVal(r, 0)));
+    renderLineChart('chart-b2c-daily', dailyLabels, [{ label: 'B2C Sessions', data: dailyVals, color: '#2d6a4f' }]);
+
+    // Also update overview daily trend (need B2B data too — defer to updateOverviewChart)
+    sessionStorage.setItem('b2c_daily_labels', JSON.stringify(dailyLabels));
+    sessionStorage.setItem('b2c_daily_vals', JSON.stringify(dailyVals));
+    updateOverviewDailyChart();
+  }
+
+  // ─── B2B GA4 DATA ───
+  async function loadB2BData(from, to, prev) {
+    const metricsReq = [
+      { name: 'sessions' },
+      { name: 'totalUsers' },
+      { name: 'newUsers' },
+      { name: 'engagementRate' },
+      { name: 'averageSessionDuration' }
+    ];
+
+    const [curr, prevData, formData, prevFormData, cityData, deviceData, dailyData] = await Promise.all([
+      ga4Query(B2B_PROPERTY, { dateRanges: [{ startDate: from, endDate: to }], metrics: metricsReq }),
+      ga4Query(B2B_PROPERTY, { dateRanges: [{ startDate: prev.from, endDate: prev.to }], metrics: metricsReq }),
+      ga4Query(B2B_PROPERTY, {
+        dateRanges: [{ startDate: from, endDate: to }],
+        dimensions: [{ name: 'eventName' }],
+        metrics: [{ name: 'eventCount' }]
+      }),
+      ga4Query(B2B_PROPERTY, {
+        dateRanges: [{ startDate: prev.from, endDate: prev.to }],
+        dimensions: [{ name: 'eventName' }],
+        metrics: [{ name: 'eventCount' }]
+      }),
+      ga4Query(B2B_PROPERTY, {
+        dateRanges: [{ startDate: from, endDate: to }],
+        dimensions: [{ name: 'city' }],
+        metrics: [{ name: 'sessions' }, { name: 'newUsers' }],
+        orderBys: [{ metric: { metricName: 'sessions' }, desc: true }],
+        limit: 10
+      }),
+      ga4Query(B2B_PROPERTY, {
+        dateRanges: [{ startDate: from, endDate: to }],
+        dimensions: [{ name: 'deviceCategory' }],
+        metrics: [{ name: 'sessions' }]
       }),
       ga4Query(B2B_PROPERTY, {
         dateRanges: [{ startDate: from, endDate: to }],
@@ -1382,56 +1302,292 @@
       })
     ]);
 
-    const b2cRows = b2cDaily.rows || [];
-    const b2bRows = b2bDaily.rows || [];
+    const row = curr.rows?.[0];
+    const prow = prevData.rows?.[0];
 
-    const labels = b2cRows.map(r => {
-      const d = getDim(r, 0);
-      return d.slice(4, 6) + '/' + d.slice(6, 8);
-    });
-    const b2cVals = b2cRows.map(r => parseInt(getVal(r, 0)));
-    const b2bVals = b2bRows.map(r => parseInt(getVal(r, 0)));
+    const sessions = parseInt(getVal(row, 0));
+    const totalUsers = parseInt(getVal(row, 1));
+    const newUsers = parseInt(getVal(row, 2));
+    const engRate = parseFloat(getVal(row, 3)) * 100;
+    const sessionDur = parseFloat(getVal(row, 4));
 
-    renderLineChart('chart-daily-trend', labels, [
-      { label: 'B2C Sessions', data: b2cVals, color: '#2d6a4f' },
-      { label: 'B2B Sessions', data: b2bVals, color: '#1d4ed8' }
-    ]);
+    const pSessions = parseInt(getVal(prow, 0));
+    const pTotalUsers = parseInt(getVal(prow, 1));
+    const pNewUsers = parseInt(getVal(prow, 2));
+    const pEngRate = parseFloat(getVal(prow, 3)) * 100;
+    const pSessionDur = parseFloat(getVal(prow, 4));
 
-    renderLineChart('chart-b2b-daily', labels, [
-      { label: 'B2B Sessions', data: b2bVals, color: '#1d4ed8' }
-    ]);
+    // Extract form events
+    function getEvent(rows, name) {
+      const r = rows.find(r => getDim(r, 0) === name);
+      return r ? parseInt(getVal(r, 0)) : 0;
+    }
+    const formStarts = getEvent(formData.rows || [], 'form_start');
+    const formSubmits = getEvent(formData.rows || [], 'form_submit');
+    const pFormStarts = getEvent(prevFormData.rows || [], 'form_start');
+    const pFormSubmits = getEvent(prevFormData.rows || [], 'form_submit');
+    const formRate = formStarts > 0 ? ((formSubmits / formStarts) * 100).toFixed(0) : '0';
+    const pFormRate = pFormStarts > 0 ? ((pFormSubmits / pFormStarts) * 100) : 0;
+
+    // Store for overview
+    sessionStorage.setItem('b2b_sessions', sessions);
+    sessionStorage.setItem('b2b_total_users', totalUsers);
+    sessionStorage.setItem('b2b_new_users', newUsers);
+    sessionStorage.setItem('p_b2b_sessions', pSessions);
+    sessionStorage.setItem('p_b2b_total_users', pTotalUsers);
+    sessionStorage.setItem('p_b2b_new_users', pNewUsers);
+
+    // B2B KPIs
+    set('b2b-sessions', fmt(sessions)); delta(sessions, pSessions, 'b2b-sessions-d');
+    set('b2b-total-users', fmt(totalUsers)); delta(totalUsers, pTotalUsers, 'b2b-total-users-d');
+    set('b2b-new-users', fmt(newUsers)); delta(newUsers, pNewUsers, 'b2b-new-users-d');
+    set('b2b-eng-rate', engRate.toFixed(1) + '%'); delta(engRate, pEngRate, 'b2b-eng-rate-d');
+    set('b2b-session-dur', fmtDuration(sessionDur)); delta(sessionDur, pSessionDur, 'b2b-session-dur-d');
+    set('b2b-form-starts', fmt(formStarts)); delta(formStarts, pFormStarts, 'b2b-form-starts-d');
+    set('b2b-form-submits', fmt(formSubmits)); delta(formSubmits, pFormSubmits, 'b2b-form-submits-d');
+    set('b2b-form-rate', formRate + '%'); delta(parseFloat(formRate), pFormRate, 'b2b-form-rate-d');
+
+    // Update combined overview traffic
+    updateOverviewTraffic();
+
+    // Cities
+    renderCitiesTable('b2b-cities-table', cityData.rows || []);
+
+    // Device doughnut
+    renderDeviceDoughnut('chart-b2b-devices', deviceData.rows || []);
+
+    // Daily sessions B2B
+    const dailyRows = dailyData.rows || [];
+    const dailyLabels = dailyRows.map(r => { const d = getDim(r, 0); return d.slice(4,6)+'/'+d.slice(6,8); });
+    const dailyVals = dailyRows.map(r => parseInt(getVal(r, 0)));
+    renderLineChart('chart-b2b-daily', dailyLabels, [{ label: 'B2B Sessions', data: dailyVals, color: '#1d4ed8' }]);
+    sessionStorage.setItem('b2b_daily_labels', JSON.stringify(dailyLabels));
+    sessionStorage.setItem('b2b_daily_vals', JSON.stringify(dailyVals));
+    updateOverviewDailyChart();
   }
 
-  // ─── CHART HELPERS ───
+  // ─── HUBSPOT ORDERS ───
+  async function loadB2BHubSpotData(from, to, prev) {
+    const ids = ['b2b-hs-revenue', 'b2b-hs-orders', 'b2b-hs-aov', 'ov-b2b-revenue'];
+    ids.forEach(id => { const el = document.getElementById(id); if (el) el.textContent = '…'; });
+
+    try {
+      const [curr, prevData] = await Promise.all([
+        fetch(`${CF_ORDERS}?from=${from}&to=${to}`).then(r => r.json()),
+        fetch(`${CF_ORDERS}?from=${prev.from}&to=${prev.to}`).then(r => r.json())
+      ]);
+
+      set('b2b-hs-revenue', '$' + fmt(Math.round(curr.revenue)));
+      delta(curr.revenue, prevData.revenue, 'b2b-hs-revenue-d');
+      set('b2b-hs-orders', fmt(curr.orders));
+      delta(curr.orders, prevData.orders, 'b2b-hs-orders-d');
+      set('b2b-hs-aov', '$' + fmt(Math.round(curr.aov)));
+      delta(curr.aov, prevData.aov, 'b2b-hs-aov-d');
+      set('ov-b2b-revenue', '$' + fmt(Math.round(curr.revenue)));
+      delta(curr.revenue, prevData.revenue, 'ov-b2b-revenue-d');
+
+      sessionStorage.setItem('b2b_revenue', Math.round(curr.revenue));
+      sessionStorage.setItem('p_b2b_revenue', Math.round(prevData.revenue));
+      updateOverviewTotalRevenue();
+
+    } catch (err) {
+      console.error('HubSpot orders error:', err);
+      ids.forEach(id => { const el = document.getElementById(id); if (el) el.textContent = 'N/A'; });
+    }
+  }
+
+  // ─── HUBSPOT PRODUCTS ───
+  async function loadB2BProductsData(from, to) {
+    const loadingRow = '<tr><td colspan="4" style="text-align:center;color:var(--text-light);padding:24px;">Loading…</td></tr>';
+    ['b2b-products-table', 'ov-b2b-products-table'].forEach(id => {
+      const el = document.getElementById(id); if (el) el.innerHTML = loadingRow;
+    });
+
+    try {
+      const res = await fetch(`${CF_PRODUCTS}?from=${from}&to=${to}`);
+      if (!res.ok) throw new Error('Products worker error');
+      const data = await res.json();
+
+      set('b2b-hs-unique-products', fmt(data.uniqueProducts));
+
+      const products = data.products || [];
+      const emptyRow = '<tr><td colspan="4" style="text-align:center;color:var(--text-light);padding:24px;">No data in this period</td></tr>';
+
+      if (products.length === 0) {
+        ['b2b-products-table', 'ov-b2b-products-table'].forEach(id => {
+          const el = document.getElementById(id); if (el) el.innerHTML = emptyRow;
+        });
+        return;
+      }
+
+      const html = products.map((p, i) => {
+        const short = p.name.length > 35 ? p.name.slice(0, 33) + '…' : p.name;
+        return `<tr>
+          <td style="color:var(--text-light);font-weight:600;">${i+1}</td>
+          <td style="font-weight:500;" title="${p.name}">${short}</td>
+          <td>${fmt(p.units)}</td>
+          <td style="font-weight:700;">$${fmt(Math.round(p.revenue))}</td>
+        </tr>`;
+      }).join('');
+
+      ['b2b-products-table', 'ov-b2b-products-table'].forEach(id => {
+        const el = document.getElementById(id); if (el) el.innerHTML = html;
+      });
+
+      const labels = products.map(p => p.name.length > 18 ? p.name.slice(0,16)+'…' : p.name);
+      const revs = products.map(p => p.revenue.toFixed(0));
+      renderBarChart('chart-b2b-products', labels, revs, '#1d4ed8');
+
+    } catch (err) {
+      console.error('Products error:', err);
+      const errRow = '<tr><td colspan="4" style="text-align:center;color:var(--red);padding:24px;">Could not load product data</td></tr>';
+      ['b2b-products-table', 'ov-b2b-products-table'].forEach(id => {
+        const el = document.getElementById(id); if (el) el.innerHTML = errRow;
+      });
+    }
+  }
+
+  // ─── COMBINED OVERVIEW UPDATERS ───
+  function updateOverviewTraffic() {
+    const b2cS = parseInt(sessionStorage.getItem('b2c_sessions') || 0);
+    const b2bS = parseInt(sessionStorage.getItem('b2b_sessions') || 0);
+    const b2cTU = parseInt(sessionStorage.getItem('b2c_total_users') || 0);
+    const b2bTU = parseInt(sessionStorage.getItem('b2b_total_users') || 0);
+    const b2cNU = parseInt(sessionStorage.getItem('b2c_new_users') || 0);
+    const b2bNU = parseInt(sessionStorage.getItem('b2b_new_users') || 0);
+    const pb2cS = parseInt(sessionStorage.getItem('p_b2c_sessions') || 0);
+    const pb2bS = parseInt(sessionStorage.getItem('p_b2b_sessions') || 0);
+    const pb2cTU = parseInt(sessionStorage.getItem('p_b2c_total_users') || 0);
+    const pb2bTU = parseInt(sessionStorage.getItem('p_b2b_total_users') || 0);
+    const pb2cNU = parseInt(sessionStorage.getItem('p_b2c_new_users') || 0);
+    const pb2bNU = parseInt(sessionStorage.getItem('p_b2b_new_users') || 0);
+    const engRate = parseFloat(sessionStorage.getItem('b2c_eng_rate') || 0);
+    const pEngRate = parseFloat(sessionStorage.getItem('p_b2c_eng_rate') || 0);
+    const sessionDur = parseFloat(sessionStorage.getItem('b2c_session_dur') || 0);
+    const pSessionDur = parseFloat(sessionStorage.getItem('p_b2c_session_dur') || 0);
+
+    if (b2cS || b2bS) {
+      set('ov-sessions', fmt(b2cS + b2bS));
+      delta(b2cS + b2bS, pb2cS + pb2bS, 'ov-sessions-d');
+    }
+    if (b2cTU || b2bTU) {
+      set('ov-total-users', fmt(b2cTU + b2bTU));
+      delta(b2cTU + b2bTU, pb2cTU + pb2bTU, 'ov-total-users-d');
+    }
+    if (b2cNU || b2bNU) {
+      set('ov-new-users', fmt(b2cNU + b2bNU));
+      delta(b2cNU + b2bNU, pb2cNU + pb2bNU, 'ov-new-users-d');
+    }
+    if (engRate) { set('ov-eng-rate', engRate.toFixed(1) + '%'); delta(engRate, pEngRate, 'ov-eng-rate-d'); }
+    if (sessionDur) { set('ov-session-dur', fmtDuration(sessionDur)); delta(sessionDur, pSessionDur, 'ov-session-dur-d'); }
+  }
+
+  function updateOverviewTotalRevenue() {
+    const b2cR = parseInt(sessionStorage.getItem('b2c_revenue') || 0);
+    const b2bR = parseInt(sessionStorage.getItem('b2b_revenue') || 0);
+    const pb2cR = parseInt(sessionStorage.getItem('p_b2c_revenue') || 0);
+    const pb2bR = parseInt(sessionStorage.getItem('p_b2b_revenue') || 0);
+    if (b2cR || b2bR) {
+      set('ov-total-revenue', '$' + fmt(b2cR + b2bR));
+      delta(b2cR + b2bR, pb2cR + pb2bR, 'ov-total-revenue-d');
+    }
+  }
+
+  function updateOverviewDailyChart() {
+    const b2cLabels = JSON.parse(sessionStorage.getItem('b2c_daily_labels') || '[]');
+    const b2cVals = JSON.parse(sessionStorage.getItem('b2c_daily_vals') || '[]');
+    const b2bVals = JSON.parse(sessionStorage.getItem('b2b_daily_vals') || '[]');
+    if (b2cLabels.length > 0) {
+      renderLineChart('chart-daily-trend', b2cLabels, [
+        { label: 'B2C Sessions', data: b2cVals, color: '#2d6a4f' },
+        { label: 'B2B Sessions', data: b2bVals.length ? b2bVals : b2cVals.map(() => 0), color: '#1d4ed8' }
+      ]);
+    }
+  }
+
+  // ─── RENDER HELPERS ───
+  function set(id, val) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = val;
+  }
+
+  function renderProductsTableB2C(tbodyId, rows) {
+    const tbody = document.getElementById(tbodyId);
+    if (!tbody) return;
+    if (rows.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--text-light);padding:24px;">No purchase data in this period</td></tr>';
+      return;
+    }
+    tbody.innerHTML = rows.map((r, i) => {
+      const name = getDim(r, 0);
+      const cat = getDim(r, 1);
+      const rev = parseFloat(getVal(r, 0));
+      const units = getVal(r, 1);
+      const badgeClass = cat === 'Matcha' ? 'badge-green' : cat === 'Green' ? 'badge-blue' : 'badge-amber';
+      return `<tr>
+        <td style="color:var(--text-light);font-weight:600;">${i+1}</td>
+        <td style="font-weight:500;">${name}</td>
+        <td><span class="badge ${badgeClass}">${cat || '—'}</span></td>
+        <td>${units}</td>
+        <td style="font-weight:700;">$${fmt(Math.round(rev))}</td>
+      </tr>`;
+    }).join('');
+  }
+
+  function renderCitiesTable(tbodyId, rows) {
+    const tbody = document.getElementById(tbodyId);
+    if (!tbody) return;
+    if (!rows.length) {
+      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--text-light);padding:24px;">No data</td></tr>';
+      return;
+    }
+    tbody.innerHTML = rows.map((r, i) => {
+      const city = getDim(r, 0) || '(not set)';
+      const sessions = parseInt(getVal(r, 0));
+      const newUsers = parseInt(getVal(r, 1));
+      return `<tr>
+        <td style="color:var(--text-light);font-weight:600;">${i+1}</td>
+        <td style="font-weight:500;">${city}</td>
+        <td>${fmt(sessions)}</td>
+        <td>${fmt(newUsers)}</td>
+      </tr>`;
+    }).join('');
+  }
+
+  function renderDeviceDoughnut(id, rows) {
+    const labels = rows.map(r => getDim(r, 0));
+    const vals = rows.map(r => parseInt(getVal(r, 0)));
+    const colors = { desktop: '#2d6a4f', mobile: '#1d4ed8', tablet: '#d97706' };
+    const palette = labels.map(l => colors[l.toLowerCase()] || '#7c3aed');
+    renderDoughnut(id, labels, vals, palette);
+  }
+
   function renderDoughnut(id, labels, data, colors) {
-    if (charts[id]) charts[id].destroy();
-    const ctx = document.getElementById(id).getContext('2d');
+    if (charts[id]) { charts[id].destroy(); delete charts[id]; }
+    const canvas = document.getElementById(id);
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
     const palette = colors || ['#2d6a4f', '#40916c', '#1d4ed8', '#d97706', '#dc2626', '#7c3aed', '#db2777'];
     charts[id] = new Chart(ctx, {
       type: 'doughnut',
       data: {
         labels,
-        datasets: [{
-          data,
-          backgroundColor: palette.slice(0, labels.length),
-          borderWidth: 2,
-          borderColor: '#fff'
-        }]
+        datasets: [{ data, backgroundColor: palette.slice(0, labels.length), borderWidth: 2, borderColor: '#fff' }]
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        plugins: {
-          legend: { position: 'right', labels: { font: { size: 12 }, padding: 16 } }
-        },
+        plugins: { legend: { position: 'right', labels: { font: { size: 12 }, padding: 16 } } },
         cutout: '60%'
       }
     });
   }
 
   function renderLineChart(id, labels, datasets) {
-    if (charts[id]) charts[id].destroy();
-    const ctx = document.getElementById(id).getContext('2d');
+    if (charts[id]) { charts[id].destroy(); delete charts[id]; }
+    const canvas = document.getElementById(id);
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
     charts[id] = new Chart(ctx, {
       type: 'line',
       data: {
@@ -1450,9 +1606,7 @@
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        plugins: {
-          legend: { labels: { font: { size: 12 } } }
-        },
+        plugins: { legend: { labels: { font: { size: 12 } } } },
         scales: {
           x: { grid: { display: false }, ticks: { font: { size: 11 }, maxTicksLimit: 10 } },
           y: { grid: { color: '#f3f4f6' }, ticks: { font: { size: 11 } } }
@@ -1462,19 +1616,15 @@
   }
 
   function renderBarChart(id, labels, data, color) {
-    if (charts[id]) charts[id].destroy();
-    const ctx = document.getElementById(id).getContext('2d');
+    if (charts[id]) { charts[id].destroy(); delete charts[id]; }
+    const canvas = document.getElementById(id);
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
     charts[id] = new Chart(ctx, {
       type: 'bar',
       data: {
         labels,
-        datasets: [{
-          label: 'Revenue ($)',
-          data,
-          backgroundColor: color || '#2d6a4f',
-          borderRadius: 4,
-          borderSkipped: false
-        }]
+        datasets: [{ label: 'Revenue ($)', data, backgroundColor: color || '#2d6a4f', borderRadius: 4, borderSkipped: false }]
       },
       options: {
         indexAxis: 'y',
@@ -1482,11 +1632,7 @@
         maintainAspectRatio: false,
         plugins: {
           legend: { display: false },
-          tooltip: {
-            callbacks: {
-              label: ctx => ' $' + parseInt(ctx.raw).toLocaleString('en-US')
-            }
-          }
+          tooltip: { callbacks: { label: c => ' $' + parseInt(c.raw).toLocaleString('en-US') } }
         },
         scales: {
           x: { grid: { color: '#f3f4f6' }, ticks: { font: { size: 11 }, callback: v => '$' + v } },
@@ -1494,25 +1640,6 @@
         }
       }
     });
-  }
-
-  function renderFunnel(containerId, steps) {
-    const container = document.getElementById(containerId);
-    const max = steps[0]?.value || 1;
-    container.innerHTML = steps.map(step => {
-      const pct = Math.round((step.value / max) * 100);
-      return `<div class="funnel-step">
-        <div class="funnel-label">${step.label}</div>
-        <div class="funnel-bar-wrap">
-          <div class="funnel-bar" style="width:${pct}%">${pct > 15 ? pct + '%' : ''}</div>
-        </div>
-        <div class="funnel-count">${fmt(step.value)}</div>
-      </div>`;
-    }).join('');
-  }
-
-  function fmt(n) {
-    return n?.toLocaleString('en-US') ?? '—';
   }
 
   // ─── TABS ───
