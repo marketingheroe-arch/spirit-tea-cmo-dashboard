@@ -589,7 +589,7 @@
 
       <!-- Commerce -->
       <div class="block-label">Commerce — Revenue</div>
-      <div class="kpi-grid kpi-grid-4">
+      <div class="kpi-grid kpi-grid-3">
         <div class="kpi-card green">
           <div class="kpi-label">Total Revenue</div>
           <div class="kpi-value" id="ov-total-revenue">—</div>
@@ -607,12 +607,6 @@
           <div class="kpi-value" id="ov-b2b-revenue">—</div>
           <div id="ov-b2b-revenue-d"></div>
           <div class="kpi-sub">Wholesale orders</div>
-        </div>
-        <div class="kpi-card amber">
-          <div class="kpi-label">B2C Conv. Rate</div>
-          <div class="kpi-value" id="ov-cr">—</div>
-          <div id="ov-cr-d"></div>
-          <div class="kpi-sub">Sessions → Purchase</div>
         </div>
       </div>
 
@@ -671,9 +665,9 @@
       <!-- Audience -->
       <div class="block-label">Audience — Top Cities</div>
       <div class="table-card">
-        <div class="chart-title">Top Cities by Sessions — B2C</div>
+        <div class="chart-title">Top Cities by Sessions — B2C + B2B</div>
         <table>
-          <thead><tr><th>#</th><th>City</th><th>Sessions</th><th>New Users</th><th>Purchases</th></tr></thead>
+          <thead><tr><th>#</th><th>City</th><th>Sessions</th><th>New Users</th><th>Purchases (B2C)</th></tr></thead>
           <tbody id="ov-cities-table">
             <tr><td colspan="5" style="text-align:center;color:var(--text-light);padding:24px;">Loading…</td></tr>
           </tbody>
@@ -1303,10 +1297,6 @@
     delta(revenue, pRevenue, 'ov-revenue-d');
     updateOverviewTotalRevenue();
 
-    // Overview conversion
-    set('ov-cr', cr + '%');
-    delta(parseFloat(cr), pCr, 'ov-cr-d');
-
     // Products table B2C
     const prodRows = productData.rows || [];
     renderProductsTableB2C('b2c-products-table', prodRows);
@@ -1348,8 +1338,55 @@
     renderBarChart('chart-b2c-products', pLabels, pRevs, '#2d6a4f');
 
     // Cities table B2C (with purchases col)
-    renderCitiesTable('b2c-cities-table', cityData.rows || [], true);
-    renderCitiesTable('ov-cities-table', (cityData.rows || []).slice(0, 10), true);
+    const b2cCityRows = cityData.rows || [];
+    renderCitiesTable('b2c-cities-table', b2cCityRows, true);
+
+    // Overview cities: merge B2C + B2B by city name
+    const b2bCityRaw = sessionStorage.getItem('b2b_city_rows');
+    const b2bCityRows = b2bCityRaw ? JSON.parse(b2bCityRaw) : [];
+    const cityMap = {};
+    // Add B2C rows first (index: sessions=0, newUsers=1, purchases=2)
+    b2cCityRows.forEach(r => {
+      const city = getDim(r, 0) || '(not set)';
+      cityMap[city] = {
+        sessions: parseInt(getVal(r, 0)) || 0,
+        newUsers: parseInt(getVal(r, 1)) || 0,
+        purchases: parseInt(getVal(r, 2)) || 0
+      };
+    });
+    // Merge B2B rows (index: sessions=0, newUsers=1; no purchases in B2B)
+    b2bCityRows.forEach(r => {
+      const city = getDim(r, 0) || '(not set)';
+      if (cityMap[city]) {
+        cityMap[city].sessions += parseInt(getVal(r, 0)) || 0;
+        cityMap[city].newUsers += parseInt(getVal(r, 1)) || 0;
+      } else {
+        cityMap[city] = {
+          sessions: parseInt(getVal(r, 0)) || 0,
+          newUsers: parseInt(getVal(r, 1)) || 0,
+          purchases: 0
+        };
+      }
+    });
+    const mergedCities = Object.entries(cityMap)
+      .map(([city, d]) => ({ city, ...d }))
+      .sort((a, b) => b.sessions - a.sessions)
+      .slice(0, 10);
+    // Render merged cities as synthetic rows compatible with renderCitiesTable
+    const ovCitiesTbody = document.getElementById('ov-cities-table');
+    if (ovCitiesTbody) {
+      if (!mergedCities.length) {
+        ovCitiesTbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--text-light);padding:24px;">No data</td></tr>';
+      } else {
+        ovCitiesTbody.innerHTML = mergedCities.map((d, i) => `<tr>
+          <td style="color:var(--text-light);font-weight:600;">${i+1}</td>
+          <td style="font-weight:500;">${d.city}</td>
+          <td>${fmt(d.sessions)}</td>
+          <td>${fmt(d.newUsers)}</td>
+          <td style="font-weight:600;">${d.purchases > 0 ? fmt(d.purchases) : '—'}</td>
+        </tr>`).join('');
+      }
+    }
 
     // Device doughnut B2C
     renderDeviceDoughnut('chart-b2c-devices', deviceData.rows || []);
@@ -1459,7 +1496,9 @@
     updateOverviewTraffic();
 
     // Cities
-    renderCitiesTable('b2b-cities-table', cityData.rows || []);
+    const b2bCityRows = cityData.rows || [];
+    renderCitiesTable('b2b-cities-table', b2bCityRows);
+    sessionStorage.setItem('b2b_city_rows', JSON.stringify(b2bCityRows));
 
     // Device doughnut
     renderDeviceDoughnut('chart-b2b-devices', deviceData.rows || []);
